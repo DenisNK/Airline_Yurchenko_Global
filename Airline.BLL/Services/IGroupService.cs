@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Global_Logic_ASP.Core.Services
+namespace Airline.BLL.Services
 {
     public interface IGroupService
     {

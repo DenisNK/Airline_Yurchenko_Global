@@ -7,9 +7,9 @@ namespace Airline.DAL.IRepository
     public interface IRepositoryWrapper
 
     {
-        //IDisciplinesRepository DisciplinesRepo { get; }
-        //IStudentRepository StudentRepo { get; }
-        //IStudDiscRepository StudDiscRepo { get; }
+        IDisciplinesRepository DisciplinesRepo { get; }
+        IStudentRepository StudentRepo { get; }
+        IStudDiscRepository StudDiscRepo { get; }
         ITeacherRepository TeacherRepository { get; }
         void Save();
 

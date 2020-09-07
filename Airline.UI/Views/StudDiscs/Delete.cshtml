@@ -1,4 +1,4 @@
-﻿@model Global_Logic_ASP.Core.Models.StudDisc
+﻿@model Airline.DAL.Models.StudDisc
 
 @{
     ViewData["Title"] = "Delete";
@@ -11,20 +11,20 @@
     <h4>StudDisc</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Student)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Student.Group)
-        </dd class>
-        <dt class = "col-sm-2">
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Discipline)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Discipline.Id)
-        </dd class>
+        </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="StudentId" />
         <input type="hidden" asp-for="DisciplineId" />

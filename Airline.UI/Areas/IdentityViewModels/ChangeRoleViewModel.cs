@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace Global_Logic_ASP.Core.Areas.IdentityControllers
+namespace Airline_Yurchenko.Areas.IdentityViewModels
 {
     public class ChangeRoleViewModel
     {

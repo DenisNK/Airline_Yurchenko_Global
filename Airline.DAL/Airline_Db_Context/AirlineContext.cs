@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Airline.DAL.Configurations;
 using Airline.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +16,9 @@ namespace Airline.DAL.Airline_Db_Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new TeacherConfigurations());
-            //modelBuilder.ApplyConfiguration(new StudentConfigurations());
-            //modelBuilder.ApplyConfiguration(new StudDiscConfigurations());
+            modelBuilder.ApplyConfiguration(new TeacherConfigurations());
+            modelBuilder.ApplyConfiguration(new StudentConfigurations());
+            modelBuilder.ApplyConfiguration(new StudDiscConfigurations());
             modelBuilder.ApplyConfiguration(new DisciplinesConfigurations());
 
             base.OnModelCreating(modelBuilder);

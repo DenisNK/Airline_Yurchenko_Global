@@ -1,7 +1,6 @@
-﻿using Global_Logic_ASP.Core.Middleware;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 
-namespace Global_Logic_ASP.Core.Extensions
+namespace Airline_Yurchenko.Middleware
 {
     static class TopSecretExtentions
     {

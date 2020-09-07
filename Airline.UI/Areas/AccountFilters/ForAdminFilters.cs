@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using static Global_Logic_ASP.Core.Initializator.Constants;
-namespace Global_Logic_ASP.Core.Areas.AccountFilters
+using static Airline.DAL.Initializator.Constants;
+namespace Airline_Yurchenko.Areas.AccountFilters
 {
     public class ForAdminFilter : IAuthorizationFilter
     {

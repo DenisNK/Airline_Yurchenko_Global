@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Global_Logic_ASP.Core.FiltersApp
+namespace Airline_Yurchenko.FiltersApp
 {
     public class CurrentDataTimeFilter : Attribute, IResourceFilter
     {

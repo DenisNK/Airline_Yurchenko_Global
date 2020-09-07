@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Global_Logic_ASP.Core.Migrations
+namespace Airline.DAL.Migrations
 {
     public partial class Init : Migration
     {

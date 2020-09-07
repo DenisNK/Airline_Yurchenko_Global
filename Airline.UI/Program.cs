@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Global_Logic_ASP.Core.DAL;
-using Global_Logic_ASP.Core.Initializator;
+using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.Initializator;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Global_Logic_ASP.Core
+namespace Airline_Yurchenko
 {
     public class Program
     {

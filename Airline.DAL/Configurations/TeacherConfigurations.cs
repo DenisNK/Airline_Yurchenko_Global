@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Global_Logic_ASP.Core.Models;
+﻿using Airline.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Global_Logic_ASP.Core.Initializator.Constants;
-namespace Global_Logic_ASP.Core.Configurations
+using static Airline.DAL.Initializator.Constants;
+namespace Airline.DAL.Configurations
 {
     public class TeacherConfigurations : IEntityTypeConfiguration<Teacher>
     {

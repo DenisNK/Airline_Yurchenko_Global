@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Global_Logic_ASP.Core.Models;
+﻿using System.Collections.Generic;
+using Airline.DAL.Models;
 
-namespace Global_Logic_ASP.Core.ViewModels
+namespace Airline_Yurchenko.ViewModels
 {
     public class StudentDisciplinesViewModel
     {

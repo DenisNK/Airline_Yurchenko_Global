@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Global_Logic_ASP.Core.Areas.AccountViewModels;
+using Airline_Yurchenko.Areas.IdentityViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using static Global_Logic_ASP.Core.Initializator.Constants;
-namespace Global_Logic_ASP.Core.Areas.AccountController
+using static Airline.DAL.Initializator.Constants;
+namespace Airline_Yurchenko.Areas.IdentityControllers
 {
     [Authorize(Roles = ADMIN)]
     public class AccountController : Controller

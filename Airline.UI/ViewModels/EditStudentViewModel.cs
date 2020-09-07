@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Global_Logic_ASP.Core.ValidationAttribut;
+﻿using System.ComponentModel.DataAnnotations;
+using Airline_Yurchenko.ValidationAttribute;
 
-namespace Global_Logic_ASP.Core.ViewModels
+namespace Airline_Yurchenko.ViewModels
 {
     public class EditStudentViewModel
     {

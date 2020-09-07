@@ -1,20 +1,19 @@
 using System.Linq;
-using Global_Logic_ASP.Core.DAL;
-using Global_Logic_ASP.Core.Extensions;
-using Global_Logic_ASP.Core.FiltersApp;
-using Global_Logic_ASP.Core.IRepository;
+using Airline.BLL.Extensions;
+using Airline.DAL.Airline_Db_Context;
+using Airline_Yurchenko.FiltersApp;
+using Airline_Yurchenko.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Global_Logic_ASP.Core.Repository;
-using Microsoft.AspNetCore.Identity;
-
-namespace Global_Logic_ASP.Core
+using static Airline.DAL.Initializator.Constants;
+namespace Airline_Yurchenko
 {
     public class Startup
     {
@@ -93,7 +92,7 @@ namespace Global_Logic_ASP.Core
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();
 
-           // app.UseTopSecret(SECRET_FILE);
+            app.UseTopSecret(SECRET_FILE);
 
             app.UseEndpoints(endpoints =>
             {

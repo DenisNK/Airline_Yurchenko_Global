@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Global_Logic_ASP.Core.ValidationAttribut
+namespace Airline_Yurchenko.ValidationAttribute
 {
-    public class ForbiddenAttribute : ValidationAttribute
+    public class ForbiddenAttribute : System.ComponentModel.DataAnnotations.ValidationAttribute
     {
         string[] _forbiddens;
 

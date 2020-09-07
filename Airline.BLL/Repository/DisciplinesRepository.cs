@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
-namespace Global_Logic_ASP.Core.Repository
+namespace Airline.BLL.Repository
 {
     public class DisciplinesRepository : Repository<Discipline>, IDisciplinesRepository
     {

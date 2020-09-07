@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
+using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Global_Logic_ASP.Core.Models;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.ViewModels;
 
-namespace Global_Logic_ASP.Core.Controllers
+namespace Airline_Yurchenko.Controllers
 {
     public class TeachersController : Controller
     {

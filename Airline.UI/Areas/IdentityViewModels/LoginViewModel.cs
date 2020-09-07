@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Global_Logic_ASP.Core.Areas.AccountViewModels
+namespace Airline_Yurchenko.Areas.IdentityViewModels
 {
     public class LoginViewModel
     {

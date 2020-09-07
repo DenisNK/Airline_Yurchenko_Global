@@ -29,4 +29,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Airline.BLL\Airline.BLL.csproj" />
+    <ProjectReference Include="..\Airline.DAL\Airline.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Airline.DAL.IRepository;
+﻿using Airline.DAL.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.BLL.Repository
@@ -9,9 +6,9 @@ namespace Airline.BLL.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private DbContext _context;
-        //private IStudentRepository _studentRepository;
-        //private IDisciplinesRepository _disciplinesRepository;
-        //private IStudDiscRepository _studDiscRepository;
+        private IStudentRepository _studentRepository;
+        private IDisciplinesRepository _disciplinesRepository;
+        private IStudDiscRepository _studDiscRepository;
         private ITeacherRepository _teacherRepository;
 
         public RepositoryWrapper(DbContext repoContext, ITeacherRepository teacherRepository)
@@ -20,44 +17,44 @@ namespace Airline.BLL.Repository
             _teacherRepository = teacherRepository;
         }
 
-        //public IStudentRepository StudentRepo
-        //{
-        //    get
-        //    {
-        //        if (_studentRepository == null)
-        //        {
-        //            _studentRepository = new StudentRepository(_context);
-        //        }
+        public IStudentRepository StudentRepo
+        {
+            get
+            {
+                if (_studentRepository == null)
+                {
+                    _studentRepository = new StudentRepository(_context);
+                }
 
-        //        return _studentRepository;
-        //    }
-        //}
+                return _studentRepository;
+            }
+        }
 
-        //public IStudDiscRepository StudDiscRepo
-        //{
-        //    get
-        //    {
-        //        if (_studDiscRepository == null)
-        //        {
-        //            _studDiscRepository = new StudDiscRepository(_context);
-        //        }
+        public IStudDiscRepository StudDiscRepo
+        {
+            get
+            {
+                if (_studDiscRepository == null)
+                {
+                    _studDiscRepository = new StudDiscRepository(_context);
+                }
 
-        //        return _studDiscRepository;
-        //    }
-        //}
+                return _studDiscRepository;
+            }
+        }
 
-        //public IDisciplinesRepository DisciplinesRepo
-        //{
-        //    get
-        //    {
-        //        if (_disciplinesRepository == null)
-        //        {
-        //            _disciplinesRepository = new DisciplinesRepository(_context);
-        //        }
+        public IDisciplinesRepository DisciplinesRepo
+        {
+            get
+            {
+                if (_disciplinesRepository == null)
+                {
+                    _disciplinesRepository = new DisciplinesRepository(_context);
+                }
 
-        //        return _disciplinesRepository;
-        //    }
-        //}
+                return _disciplinesRepository;
+            }
+        }
 
         public ITeacherRepository TeacherRepository
         {

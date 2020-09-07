@@ -1,7 +1,7 @@
-﻿using Global_Logic_ASP.Core.Services;
+﻿using Airline.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Global_Logic_ASP.Core.Extensions
+namespace Airline.BLL.Extensions
 {
     public static class GroupServiceExtension
     {

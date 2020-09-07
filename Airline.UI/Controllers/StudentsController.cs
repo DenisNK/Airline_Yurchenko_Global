@@ -2,20 +2,18 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Global_Logic_ASP.Core.Areas.AccountFilters;
-using Global_Logic_ASP.Core.Areas.AccountViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.Models;
-using Global_Logic_ASP.Core.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
+using Airline_Yurchenko.Areas.AccountFilters;
+using Airline_Yurchenko.Areas.IdentityViewModels;
+using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using static Global_Logic_ASP.Core.Initializator.Constants;
-
-namespace Global_Logic_ASP.Core.Controllers
+using Microsoft.AspNetCore.Mvc;
+using static Airline.DAL.Initializator.Constants;
+namespace Airline_Yurchenko.Controllers
 {
     //[Authorize(Roles = ADMIN)]
-   [ForAdmin]
+    [ForAdmin]
     public class StudentsController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -32,9 +30,9 @@ namespace Global_Logic_ASP.Core.Controllers
         // GET: Students
         public IActionResult Index()
         {
-            return View(_repository.Get()); 
+            return View(_repository.Get());
         }
-        
+
         // GET: Students/Create
         public IActionResult Create()
         {
@@ -48,8 +46,8 @@ namespace Global_Logic_ASP.Core.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var user = new IdentityUser { UserName = student.Name ,Email = student.Email };
-            var stud = new Student { Name = student.Name,Group = student.Group};
+            var user = new IdentityUser { UserName = student.Name, Email = student.Email };
+            var stud = new Student { Name = student.Name, Group = student.Group };
             // добавляем пользователя
             var result = await _userManager.CreateAsync(user, student.Password);
             if (result.Succeeded)
@@ -58,9 +56,9 @@ namespace Global_Logic_ASP.Core.Controllers
                 await _signInManager.SignInAsync(user, false);
                 // Add new student
                 await _repository.Create(stud);
-               await _userManager.AddToRoleAsync(user, STUDENT);
+                await _userManager.AddToRoleAsync(user, STUDENT);
 
-               await _userManager.AddClaimAsync(user, new Claim(STUDENTID, stud.Id.ToString()));
+                await _userManager.AddClaimAsync(user, new Claim(STUDENTID, stud.Id.ToString()));
                 return RedirectToAction("Index", "SelectStudentDisciplines");
             }
             else
@@ -71,19 +69,19 @@ namespace Global_Logic_ASP.Core.Controllers
         }
 
         // GET: Students/Edit/5
-           public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
                 throw new ArgumentNullException("Student id has not been entered OR Student id is not number!"); //                return NotFound();
 
-            var student = await  _repository.GetById(id);
-             var user = await _userManager.FindByNameAsync(student.Name);
-         
+            var student = await _repository.GetById(id);
+            var user = await _userManager.FindByNameAsync(student.Name);
+
             if (student == null)
             {
                 return NotFound();
             }
-            var model = new EditStudentViewModel { Name=student.Name,Group =student.Group ,Email =user.Email};
+            var model = new EditStudentViewModel { Name = student.Name, Group = student.Group, Email = user.Email };
 
             return View(model);
         }
@@ -96,22 +94,22 @@ namespace Global_Logic_ASP.Core.Controllers
             {
                 return View(model);
             }
-           
+
             var student = await _repository.GetById(id);
             var user = await _userManager.FindByNameAsync(student.Name);
-            if (user!=null)
+            if (user != null)
             {
                 student.Name = model.Name;
                 student.Group = model.Group;
                 user.Email = model.Email;
                 user.UserName = model.Name;
             }
-            
+
             await _userManager.UpdateAsync(user);
             await _repository.Update(id, student);
             return RedirectToAction(nameof(Index), "Students");
         }
-        
+
         // GET: Students/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -133,8 +131,8 @@ namespace Global_Logic_ASP.Core.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-             await _repository.Delete(id);
-             return RedirectToAction(nameof(Index), "Students");
+            await _repository.Delete(id);
+            return RedirectToAction(nameof(Index), "Students");
         }
 
         // GET: Students/Details/5

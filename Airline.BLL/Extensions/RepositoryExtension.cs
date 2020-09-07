@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.Repository;
+﻿using Airline.BLL.Repository;
+using Airline.DAL.IRepository;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Global_Logic_ASP.Core.Extensions
+namespace Airline.BLL.Extensions
 {
    public static class RepositoryExtension
     {

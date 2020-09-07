@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Global_Logic_ASP.Core.DAL;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.Models;
 
-namespace Global_Logic_ASP.Core.Controllers
+namespace Airline_Yurchenko.Controllers
 {
     public class StudDiscsController : Controller
     {
@@ -41,7 +39,7 @@ namespace Global_Logic_ASP.Core.Controllers
             var studDisc = await _context.StudDiscs
                 .Include(s => s.Discipline)
                 .Include(s => s.Student)
-                .FirstOrDefaultAsync(m =>  m.DisciplineId == id );
+                .FirstOrDefaultAsync(m => m.DisciplineId == id);
 
             if (studDisc == null)
             {
@@ -78,7 +76,7 @@ namespace Global_Logic_ASP.Core.Controllers
         }
 
         // GET: StudDiscs/Edit/5
-        public async Task<IActionResult> Edit(int? id,int id2)
+        public async Task<IActionResult> Edit(int? id, int id2)
         {
             if (id == null)
             {

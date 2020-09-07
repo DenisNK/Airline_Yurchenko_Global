@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Global_Logic_ASP.Core.ViewModels
+namespace Airline_Yurchenko.ViewModels
 {
     public class EditTeacherViewModel
     {

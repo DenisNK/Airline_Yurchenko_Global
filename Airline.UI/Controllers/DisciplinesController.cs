@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Global_Logic_ASP.Core.Models;
-using Global_Logic_ASP.Core.IRepository;
 
-namespace Global_Logic_ASP.Core.Controllers
+namespace Airline_Yurchenko.Controllers
 {
     public class DisciplinesController : Controller
     {
@@ -19,9 +19,9 @@ namespace Global_Logic_ASP.Core.Controllers
         // GET: disciplines
         public IActionResult Index()
         {
-           var query = _repositoryWrapper.DisciplinesRepo.GetWithInclude(p => p.Teacher);
-            
-           return View(query);
+            var query = _repositoryWrapper.DisciplinesRepo.GetWithInclude(p => p.Teacher);
+
+            return View(query);
         }
 
         // GET: disciplines/Create
@@ -42,7 +42,7 @@ namespace Global_Logic_ASP.Core.Controllers
             }
 
             await _repositoryWrapper.DisciplinesRepo.Create(discipline);// _repository.Create(discipline);
-          
+
             return RedirectToAction("Index", "Disciplines");
         }
 

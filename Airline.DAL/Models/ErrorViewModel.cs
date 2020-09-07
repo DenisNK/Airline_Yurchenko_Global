@@ -1,6 +1,4 @@
-using System;
-
-namespace Global_Logic_ASP.Core.Models
+namespace Airline.DAL.Models
 {
     public class ErrorViewModel
     {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using Airline_Yurchenko.Areas.IdentityViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Global_Logic_ASP.Core.Areas.IdentityControllers
+namespace Airline_Yurchenko.Areas.IdentityControllers
 {
     public class RolesController : Controller
     {

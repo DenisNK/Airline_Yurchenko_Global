@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static System.IO.File;
 using static System.Text.Json.JsonSerializer;
 
-namespace Global_Logic_ASP.Core.Services
+namespace Airline.BLL.Services
 {
     public class GroupService : IGroupService
     {

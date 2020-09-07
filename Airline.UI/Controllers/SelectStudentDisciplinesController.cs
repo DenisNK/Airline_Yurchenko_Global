@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Global_Logic_ASP.Core.Areas.AccountFilters;
-using Global_Logic_ASP.Core.DAL;
-using Global_Logic_ASP.Core.IRepository;
-using Global_Logic_ASP.Core.Models;
-using Global_Logic_ASP.Core.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.IRepository;
+using Airline.DAL.Models;
+using Airline_Yurchenko.Areas.AccountFilters;
+using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using static Global_Logic_ASP.Core.Initializator.Constants;
-namespace Global_Logic_ASP.Core.Controllers
+using static Airline.DAL.Initializator.Constants;
+namespace Airline_Yurchenko.Controllers
 {
     // [Authorize(Roles = STUDENT)]
     [ForStudent]
     public class SelectStudentDisciplinesController : Controller
     {
-       
+
         private readonly IRepositoryWrapper _repositoryWrapper;
 
         public SelectStudentDisciplinesController(AirlineContext context, IRepositoryWrapper repositoryWrapper)

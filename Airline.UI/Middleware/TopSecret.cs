@@ -7,21 +7,21 @@ using Microsoft.AspNetCore.Http;
 using static System.IO.File;
 using static System.IO.Path;
 
-namespace Global_Logic_ASP.Core.Middleware
+namespace Airline_Yurchenko.Middleware
 {
     public class TopSecret
     {
         private readonly RequestDelegate _next;
         private readonly IWebHostEnvironment _env;
         private readonly string _path;
-                                                                
+
         public TopSecret(RequestDelegate next, IWebHostEnvironment env, string path)
         {
             _next = next;
             _env = env;
             _path = path;
         }
-                            
+
         public async Task Invoke(HttpContext context)
         {
             var name = context.Request.Path.Value.Split("/").Last(); // like secret.secret
@@ -37,9 +37,9 @@ namespace Global_Logic_ASP.Core.Middleware
 
                     await using FileStream f = Open(pathToSecret, FileMode.Open, FileAccess.Read);
                     var buffer = new byte[f.Length];
-                    f.Read(buffer, 0, (int) f.Length);
+                    f.Read(buffer, 0, (int)f.Length);
 
-                    await context.Response.Body.WriteAsync(buffer, 0, (int) f.Length);
+                    await context.Response.Body.WriteAsync(buffer, 0, (int)f.Length);
                 }
                 else
                 {
