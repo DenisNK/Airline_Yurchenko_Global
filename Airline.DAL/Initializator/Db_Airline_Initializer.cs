@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 
@@ -12,6 +9,17 @@ namespace Airline.DAL.Initializator
         public static void Initialize(AirlineContext context)
         {
             context.Database.EnsureCreated();
+
+            if (!context.Team_Persons.Any())
+            {
+                context.Team_Persons.AddRange(
+                    new Team_Person { Name_Team = "Team_1" },
+                    new Team_Person { Name_Team = "Team_2" },
+                    new Team_Person { Name_Team = "Team_3" },
+                    new Team_Person { Name_Team = "Team_4" });
+
+                context.SaveChanges();
+            }
 
             if (!context.Students.Any())
             {

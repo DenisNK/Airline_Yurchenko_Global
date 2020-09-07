@@ -15,7 +15,7 @@ using Microsoft.Extensions.Hosting;
 using static Airline.DAL.Initializator.Constants;
 namespace Airline_Yurchenko
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -28,7 +28,7 @@ namespace Airline_Yurchenko
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AirlineContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+                Configuration.GetConnectionString(DEFAULT_CONNECTION)));
 
             services.AddRepositories();
        
@@ -46,9 +46,9 @@ namespace Airline_Yurchenko
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin",
+                options.AddPolicy(ADMIN,
                     t => t.RequireAssertion(
-                        context => !context.User.Claims.Any(c => c.Type == "StudentId")
+                        context => !context.User.Claims.Any(c => c.Type == STUDENTID)
                     ));
             });
 
@@ -80,7 +80,7 @@ namespace Airline_Yurchenko
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(HOME_ERROR);
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -97,9 +97,24 @@ namespace Airline_Yurchenko
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: DEFAULT,
+                    pattern: DEFAULT_PATH);
             });
         }
+    }
+
+    public partial class Startup
+    {
+        #region Constants
+        private const string DEFAULT_PATH = "{controller=Home}/{action=Index}";
+        private const string DEFAULT_CONNECTION = "DefaultConnection";
+        private const string HOME_ERROR = "/Home/Error";
+        private const string DEFAULT = "default";
+        private const string ADMINID = "AdminId";
+        private const string USERID = "UserId";
+        private const string ADMIN = "Admin";
+        private const string USER = "User";
+
+        #endregion
     }
 }

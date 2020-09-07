@@ -6,6 +6,16 @@ namespace Airline.DAL.Airline_Db_Context
 {
     public class AirlineContext : IdentityDbContext
     {
+        public DbSet<Pilot> Pilots { get; set; }
+        public DbSet<Stewardess> Stewardesses { get; set; }
+        public DbSet<Navigator> Navigators { get; set; }
+        public DbSet<Radio_operator> Radio_Operators { get; set; }
+        public DbSet<Team_Person> Team_Persons { get; set; }
+        public DbSet<Fligth> Fligths { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<FligthTeam> FligthTeams { get; set; }
+
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }

@@ -19,6 +19,50 @@ namespace Airline.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Airline.DAL.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AirportCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name_City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name_Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
+                });
+
             modelBuilder.Entity("Airline.DAL.Models.Discipline", b =>
                 {
                     b.Property<int>("Id")
@@ -44,6 +88,215 @@ namespace Airline.DAL.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Disciplines");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Fligth", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("FromCityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FromCountryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name_Fligth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("WhereCityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WhereCountryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromCityId");
+
+                    b.HasIndex("FromCountryId");
+
+                    b.HasIndex("WhereCityId");
+
+                    b.HasIndex("WhereCountryId");
+
+                    b.ToTable("Fligths");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.FligthTeam", b =>
+                {
+                    b.Property<int>("Team_PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FligthId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Team_PersonId", "FligthId");
+
+                    b.HasIndex("FligthId");
+
+                    b.ToTable("FligthTeam");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Navigator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("Team_PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Team_PersonId");
+
+                    b.ToTable("Navigator");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Pilot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("Team_PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Team_PersonId");
+
+                    b.ToTable("Pilot");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Radio_operator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int?>("Team_PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Team_PersonId");
+
+                    b.ToTable("Radio_Operators");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("Team_PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Team_PersonId");
+
+                    b.ToTable("Stewardess");
                 });
 
             modelBuilder.Entity("Airline.DAL.Models.StudDisc", b =>
@@ -101,6 +354,23 @@ namespace Airline.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Team_Person", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name_Team")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Team_Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -299,11 +569,80 @@ namespace Airline.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Airline.DAL.Models.City", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId");
+                });
+
             modelBuilder.Entity("Airline.DAL.Models.Discipline", b =>
                 {
                     b.HasOne("Airline.DAL.Models.Teacher", "Teacher")
                         .WithMany("Discipline")
                         .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Fligth", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.City", "FromCity")
+                        .WithMany()
+                        .HasForeignKey("FromCityId");
+
+                    b.HasOne("Airline.DAL.Models.Country", "FromCountry")
+                        .WithMany()
+                        .HasForeignKey("FromCountryId");
+
+                    b.HasOne("Airline.DAL.Models.City", "WhereCity")
+                        .WithMany()
+                        .HasForeignKey("WhereCityId");
+
+                    b.HasOne("Airline.DAL.Models.Country", "WhereCountry")
+                        .WithMany()
+                        .HasForeignKey("WhereCountryId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.FligthTeam", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Fligth", "Fligth")
+                        .WithMany("FligthTeams")
+                        .HasForeignKey("FligthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
+                        .WithMany("FligthTeams")
+                        .HasForeignKey("Team_PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Navigator", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
+                        .WithMany("Navigators")
+                        .HasForeignKey("Team_PersonId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Pilot", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
+                        .WithMany("Pilots")
+                        .HasForeignKey("Team_PersonId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Radio_operator", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
+                        .WithMany("Radio_Operators")
+                        .HasForeignKey("Team_PersonId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
+                        .WithMany("Stewardesses")
+                        .HasForeignKey("Team_PersonId");
                 });
 
             modelBuilder.Entity("Airline.DAL.Models.StudDisc", b =>
