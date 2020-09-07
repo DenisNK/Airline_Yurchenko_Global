@@ -1,0 +1,33 @@
+﻿@model Airline.DAL.Models.FligthTeam
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>FligthTeam</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FligthId" class="control-label"></label>
+                <select asp-for="FligthId" class ="form-control" asp-items="ViewBag.FligthId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team_PersonId" class="control-label"></label>
+                <select asp-for="Team_PersonId" class ="form-control" asp-items="ViewBag.Team_PersonId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

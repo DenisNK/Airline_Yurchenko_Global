@@ -52,7 +52,7 @@ namespace Airline.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name_Country = table.Column<string>(maxLength: 30, nullable: false)
+                    Name_Country = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,8 +211,8 @@ namespace Airline.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name_City = table.Column<string>(maxLength: 30, nullable: false),
-                    AirportCode = table.Column<string>(maxLength: 30, nullable: false),
+                    Name_City = table.Column<string>(maxLength: 20, nullable: false),
+                    AirportCode = table.Column<string>(nullable: false),
                     CountryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

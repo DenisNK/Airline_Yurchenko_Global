@@ -11,10 +11,6 @@ namespace Airline.DAL.Configurations
         {
             builder.ToTable(COUNTRY);
 
-            //builder.HasOne(p => p.Team_Person)
-            //    .WithMany(t => t.Pilots)
-            //    .HasForeignKey(p => p.Team_PersonId);
-
             builder.Property(p => p.Name_Country)
                 .IsRequired()
                 .HasMaxLength(30);
