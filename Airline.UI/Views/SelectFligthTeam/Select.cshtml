@@ -1,0 +1,20 @@
+﻿@model Airline_Yurchenko.ViewModels.FligthListViewModels
+
+@{
+    ViewData["Title"] = "Select";
+}
+
+<h1>Select</h1>
+
+<h1> Student @Model.Fligth.Name_Fligth</h1>
+<div class="container">
+    <form asp-action="Select" method="post">
+        @foreach (var item in Model.IsChoose)
+        {
+         
+        <a asp-controller="Team_Person" asp-action="TeamDetails" asp-route-id="@item.Id">@item.Name_Team</a>
+        }
+
+        <input type="hidden" name="studentId" value="@Model.Fligth.Id" />
+    </form>
+</div>

@@ -7,28 +7,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
-using Airline_Yurchenko.ViewModels;
 
 namespace Airline_Yurchenko.Controllers
 {
-    public class FligthsController : Controller
+    public class Team_PersonController : Controller
     {
         private readonly AirlineContext _context;
 
-        public FligthsController(AirlineContext context)
+        public Team_PersonController(AirlineContext context)
         {
             _context = context;
         }
 
-        // GET: Fligths
-        public async Task<IActionResult> Index(int Id)
+        // GET: Team_Person
+        public async Task<IActionResult> Index()
         {
-            var airlineContext = _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity);
-            return View(airlineContext);
-
+            return View(await _context.Team_Persons.ToListAsync());
         }
 
-        // GET: Fligths/Details/5
+
+        [HttpGet]
+        public async Task <ActionResult> TeamDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Team_Person team_Person = _context.Team_Persons.Include(t => t.Pilots).FirstOrDefault(t => t.Id == id);
+            team_Person = _context.Team_Persons.Include(t => t.Radio_Operators).FirstOrDefault(t => t.Id == id);
+            team_Person = _context.Team_Persons.Include(t => t.Stewardesses).FirstOrDefault(t => t.Id == id);
+            team_Person = _context.Team_Persons.Include(t => t.Navigators).FirstOrDefault(t => t.Id == id);
+            if (team_Person == null)
+            {
+                return NotFound();
+            }
+            return View(team_Person);
+        }
+
+
+        // GET: Team_Person/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,47 +53,39 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var fligth = await _context.Fligths
-                .Include(f => f.FromCity)
-                .Include(f => f.WhereCity)
+            var team_Person = await _context.Team_Persons
                 .FirstOrDefaultAsync(m => m.Id == id);
-            var team = _context.Team_Persons;
-          //  var model = new FligthListViewModels {Name_Fligth = fligth.Name_Fligth, Team_Person11 = new List<Team_Person>()};
-            if (fligth == null)
+            if (team_Person == null)
             {
                 return NotFound();
             }
 
-            return View(fligth);
+            return View(team_Person);
         }
 
-        // GET: Fligths/Create
+        // GET: Team_Person/Create
         public IActionResult Create()
         {
-            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode");
-            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode");
             return View();
         }
 
-        // POST: Fligths/Create
+        // POST: Team_Person/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
+        public async Task<IActionResult> Create([Bind("Name_Team,Id")] Team_Person team_Person)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fligth);
+                _context.Add(team_Person);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.FromCityId);
-            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.WhereCityId);
-            return View(fligth);
+            return View(team_Person);
         }
 
-        // GET: Fligths/Edit/5
+        // GET: Team_Person/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,24 +93,22 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var fligth = await _context.Fligths.FindAsync(id);
-            if (fligth == null)
+            var team_Person = await _context.Team_Persons.FindAsync(id);
+            if (team_Person == null)
             {
                 return NotFound();
             }
-            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.FromCityId);
-            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.WhereCityId);
-            return View(fligth);
+            return View(team_Person);
         }
 
-        // POST: Fligths/Edit/5
+        // POST: Team_Person/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
+        public async Task<IActionResult> Edit(int id, [Bind("Name_Team,Id")] Team_Person team_Person)
         {
-            if (id != fligth.Id)
+            if (id != team_Person.Id)
             {
                 return NotFound();
             }
@@ -110,12 +117,12 @@ namespace Airline_Yurchenko.Controllers
             {
                 try
                 {
-                    _context.Update(fligth);
+                    _context.Update(team_Person);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FligthExists(fligth.Id))
+                    if (!Team_PersonExists(team_Person.Id))
                     {
                         return NotFound();
                     }
@@ -126,12 +133,10 @@ namespace Airline_Yurchenko.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.FromCityId);
-            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.WhereCityId);
-            return View(fligth);
+            return View(team_Person);
         }
 
-        // GET: Fligths/Delete/5
+        // GET: Team_Person/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,32 +144,30 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var fligth = await _context.Fligths
-                .Include(f => f.FromCity)
-                .Include(f => f.WhereCity)
+            var team_Person = await _context.Team_Persons
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fligth == null)
+            if (team_Person == null)
             {
                 return NotFound();
             }
 
-            return View(fligth);
+            return View(team_Person);
         }
 
-        // POST: Fligths/Delete/5
+        // POST: Team_Person/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fligth = await _context.Fligths.FindAsync(id);
-            _context.Fligths.Remove(fligth);
+            var team_Person = await _context.Team_Persons.FindAsync(id);
+            _context.Team_Persons.Remove(team_Person);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FligthExists(int id)
+        private bool Team_PersonExists(int id)
         {
-            return _context.Fligths.Any(e => e.Id == id);
+            return _context.Team_Persons.Any(e => e.Id == id);
         }
     }
 }
