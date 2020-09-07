@@ -16,6 +16,14 @@ namespace Airline.DAL.Airline_Db_Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new City_Configurations());
+            modelBuilder.ApplyConfiguration(new Country_Configurations());
+            modelBuilder.ApplyConfiguration(new Navigator_Configurations());
+            modelBuilder.ApplyConfiguration(new Pilot_Configurations());
+            modelBuilder.ApplyConfiguration(new Stewardess_Configurations());
+            modelBuilder.ApplyConfiguration(new Team_Person_Configurations());
+            modelBuilder.ApplyConfiguration(new FligthTeam_Configurations());
+
             modelBuilder.ApplyConfiguration(new TeacherConfigurations());
             modelBuilder.ApplyConfiguration(new StudentConfigurations());
             modelBuilder.ApplyConfiguration(new StudDiscConfigurations());
