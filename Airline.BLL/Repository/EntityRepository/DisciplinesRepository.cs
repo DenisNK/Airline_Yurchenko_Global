@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Airline.DAL.IRepository;
+using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Airline.BLL.Repository
+namespace Airline.BLL.Repository.EntityRepository
 {
     public class DisciplinesRepository : Repository<Discipline>, IDisciplinesRepository
     {

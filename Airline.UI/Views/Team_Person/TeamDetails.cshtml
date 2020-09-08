@@ -1,87 +1,87 @@
 ﻿@using Airline.DAL.Models
 
-@model Airline.DAL.Models.Team_Person
+    @model Airline.DAL.Models.Team_Person
 
-@{
+    @{
 
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<br />
-@Html.HiddenFor(model => model.Id)
-<div>
-    <div class="text-center ">
-        <h1 style="font-family:'Comic Sans MS'">
-            <img src="~/Content/Airline_Person/team.png" width="50" height="50" />
-            Flight Team
-            <img src="~/Content/Airline_Person/team.png" width="50" height="50" />
-        </h1>
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <br />
+    @Html.HiddenFor(model => model.Id)
+    <div>
+        <div class="text-center ">
+            <h1 style="font-family:'Comic Sans MS'">
+                <img src="~/Content/Airline_Person/team.png" width="50" height="50" />
+                Flight Team
+                <img src="~/Content/Airline_Person/team.png" width="50" height="50" />
+            </h1>
+        </div>
+        <hr />
     </div>
-    <hr />
-</div>
 
-<table class="table border">
-    <thead>
-        <tr>
-            <th style="font-family:'Comic Sans MS'">   @Html.DisplayFor(model => model.Name_Team)</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Experience</th>
-            <th>Age</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
-    <tbody>
+    <table class="table border">
+        <thead>
+            <tr>
+                <th style="font-family:'Comic Sans MS'">   @Html.DisplayFor(model => model.Name_Team)</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Experience</th>
+                <th>Age</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
 
-        <tr>
-            @foreach (Navigator navigator in Model.Navigators)
-            {
-                <th>  <img src="~/Content/Airline_Person/Radio.png" width="45" height="45" alt="Navigator" />Dispatcher</th>
+            <tr>
+                @foreach (Navigator navigator in Model.Navigators)
+                {
+                    <th>  <img src="~/Content/Airline_Person/Radio.png" width="45" height="45" alt="Navigator" />Dispatcher</th>
 
-                <td>@navigator.Name</td>
-                <td> @navigator.Team_Person </td>
-                <td> @navigator.Experience Year</td>
-                <td> @navigator.Age</td>
-                <td> @navigator.Salary $</td>
-            }
-        </tr>
+                    <td>@navigator.Name</td>
+                    <td> @navigator.Surname</td>
+                    <td> @navigator.Experience Year</td>
+                    <td> @navigator.Age</td>
+                    <td> @navigator.Salary $</td>
+                }
+            </tr>
 
-        <tr>
-            @foreach (Pilot pilot in Model.Pilots)
-            {
-                <th><img src="~/Content/Airline_Person/pilot1.png" width="45" height="45" alt="Pilot" />Pilot</th>
+            <tr>
+                @foreach (Pilot pilot in Model.Pilots)
+                {
+                    <th><img src="~/Content/Airline_Person/pilot1.png" width="45" height="45" alt="Pilot" />Pilot</th>
 
-                <td>@pilot.Name</td>
-                <td>@pilot.Surname</td>
-                <td>@pilot.Experience Year</td>
-                <td>@pilot.Age</td>
-                <td>@pilot.Salary $</td>
-            }
-        </tr>
+                    <td>@pilot.Name</td>
+                    <td>@pilot.Surname</td>
+                    <td>@pilot.Experience Year</td>
+                    <td>@pilot.Age</td>
+                    <td>@pilot.Salary $</td>
+                }
+            </tr>
 
-        <tr>
-            <th><img src="~/Content/Airline_Person/stewardess.png" width="45" height="45" alt="Stewardess" />Stewardess</th>
+            <tr>
+                <th><img src="~/Content/Airline_Person/stewardess.png" width="45" height="45" alt="Stewardess" />Stewardess</th>
 
-            @foreach (Stewardess stewardess in Model.Stewardesses)
-            {
-                <td>@stewardess.Name </td>
-                <td>@stewardess.Surname </td>
-                <td>@stewardess.Experience Year</td>
-                <td>@stewardess.Age </td>
-                <td>@stewardess.Salary $ </td>
-            }
-        </tr>
+                @foreach (Stewardess stewardess in Model.Stewardesses)
+                {
+                    <td>@stewardess.Name </td>
+                    <td>@stewardess.Surname </td>
+                    <td>@stewardess.Experience Year</td>
+                    <td>@stewardess.Age </td>
+                    <td>@stewardess.Salary $ </td>
+                }
+            </tr>
 
-        <tr>
-            <th><img src="~/Content/Airline_Person/Steward.png" width="45" height="45" alt="Radio_operator" />Radio_operator</th>
+            <tr>
+                <th><img src="~/Content/Airline_Person/Steward.png" width="45" height="45" alt="Radio_operator" />Radio_operator</th>
 
-            @foreach (Radio_operator radio_Operator in Model.Radio_Operators)
-            {
-                <td> @radio_Operator.Name </td>
-                <td> @radio_Operator.Surname </td>
-                <td> @radio_Operator.Experience Year     </td>
-                <td> @radio_Operator.Age </td>
-                <td> @radio_Operator.Salary $</td>
-            }
-        </tr>
-    </tbody>
-</table>
+                @foreach (Radio_operator radio_Operator in Model.Radio_Operators)
+                {
+                    <td> @radio_Operator.Name </td>
+                    <td> @radio_Operator.Surname </td>
+                    <td> @radio_Operator.Experience Year     </td>
+                    <td> @radio_Operator.Age </td>
+                    <td> @radio_Operator.Salary $</td>
+                }
+            </tr>
+        </tbody>
+    </table>

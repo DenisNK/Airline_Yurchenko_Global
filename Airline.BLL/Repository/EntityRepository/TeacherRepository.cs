@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Airline.DAL.IRepository;
+using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Airline.BLL.Repository
+namespace Airline.BLL.Repository.EntityRepository
 {
     public class TeacherRepository : Repository<Teacher>, ITeacherRepository
     {

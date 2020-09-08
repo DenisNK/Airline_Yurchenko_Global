@@ -1,5 +1,7 @@
 ﻿using Airline.BLL.Repository;
+using Airline.BLL.Repository.EntityRepository;
 using Airline.DAL.IRepository;
+using Airline.DAL.IRepository.IEntityRepository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Airline.BLL.Extensions
@@ -13,6 +15,7 @@ namespace Airline.BLL.Extensions
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IPilotRepository, PilotRepository>();
 
             return services;
         }

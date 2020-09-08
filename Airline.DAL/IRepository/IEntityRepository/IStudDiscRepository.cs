@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Airline.DAL.Models;
 
-namespace Airline.DAL.IRepository
+namespace Airline.DAL.IRepository.IEntityRepository
 {
     public interface IStudDiscRepository : IGenericRepository<StudDisc>
     {

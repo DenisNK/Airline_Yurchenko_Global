@@ -1,14 +1,26 @@
-﻿@model IEnumerable<Airline.DAL.Models.Fligth>
+﻿@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Identity
+
+@model IEnumerable<Airline.DAL.Models.Fligth>
  Airline.DAL.Models.Fligth
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="text-center ">
+    <h1 style="font-family: 'Comic Sans MS'">
+        <img src="~/Content/Images/FligthRevers.jpg" width="50" height="50" />
+        @Html.DisplayNameFor(model => model.Name_Fligth) = Fligth
+        <img src="~/Content/Images/Fligth1.jpg" width="50" height="50" />
+    </h1>
+</div>
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("admin") || User.IsInRole("student"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -37,37 +49,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name_Fligth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromCity.AirportCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WhereCity.AirportCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-           
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_Fligth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FromCity.AirportCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WhereCity.AirportCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
+                    }
+
+                </td>
+
+            </tr>
+
+        }
     </tbody>
 </table>

@@ -7,10 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
+using Airline_Yurchenko.Areas.AccountFilters;
 using Airline_Yurchenko.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Airline_Yurchenko.Controllers
 {
+    [Authorize(Roles = "admin")]
+
     public class FligthsController : Controller
     {
         private readonly AirlineContext _context;
@@ -21,14 +25,25 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // GET: Fligths
-        public async Task<IActionResult> Index(int Id)
+        // [AllowAnonymous]
+        //[ForStudent]
+        //  [Authorize(Roles = "student")] 
+          //[Authorize(Roles = "admin")]
+             [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
-            var airlineContext = _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity);
-            return View(airlineContext);
+            var airlineContext =  _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity);
+            return View(await airlineContext.ToListAsync());
 
         }
 
         // GET: Fligths/Details/5
+        //[ForAdmin]
+        //[AllowAnonymous]
+        //[ForStudent]
+        //[Authorize(Roles = "admin" )]
+     //   [Authorize(Roles = "student")]
+     [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,8 +55,6 @@ namespace Airline_Yurchenko.Controllers
                 .Include(f => f.FromCity)
                 .Include(f => f.WhereCity)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            var team = _context.Team_Persons;
-          //  var model = new FligthListViewModels {Name_Fligth = fligth.Name_Fligth, Team_Person11 = new List<Team_Person>()};
             if (fligth == null)
             {
                 return NotFound();
@@ -49,7 +62,7 @@ namespace Airline_Yurchenko.Controllers
 
             return View(fligth);
         }
-
+          [ForAdmin]
         // GET: Fligths/Create
         public IActionResult Create()
         {
@@ -57,7 +70,7 @@ namespace Airline_Yurchenko.Controllers
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode");
             return View();
         }
-
+        
         // POST: Fligths/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

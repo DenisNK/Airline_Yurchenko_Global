@@ -69,3 +69,41 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+
+
+
+/*My Styles*/
+
+
+.Button_Create {
+    /*position:absolute;*/
+    /*z-index: 2;*/
+    /*text-align: center;*/
+    cursor: pointer;
+    transition: 0.5s linear;
+}
+
+.Button_Create:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.1);
+}
+
+.nav-item {
+    cursor: pointer;
+    transition: 0.5s linear;
+}
+
+.nav-item:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.1);
+}
+
+a:hover {
+    text-decoration: none;
+    opacity: 0.35;
+    -webkit-transition: all 1.3s ease-in-out;
+}
+

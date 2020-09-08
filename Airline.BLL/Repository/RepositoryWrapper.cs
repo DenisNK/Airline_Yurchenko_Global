@@ -1,4 +1,6 @@
-﻿using Airline.DAL.IRepository;
+﻿using Airline.BLL.Repository.EntityRepository;
+using Airline.DAL.IRepository;
+using Airline.DAL.IRepository.IEntityRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.BLL.Repository
@@ -10,11 +12,13 @@ namespace Airline.BLL.Repository
         private IDisciplinesRepository _disciplinesRepository;
         private IStudDiscRepository _studDiscRepository;
         private ITeacherRepository _teacherRepository;
+        private IPilotRepository _pilotRepository;
 
-        public RepositoryWrapper(DbContext repoContext, ITeacherRepository teacherRepository)
+        public RepositoryWrapper(DbContext repoContext, ITeacherRepository teacherRepository, IPilotRepository pilotRepository)
         {
             _context = repoContext;
             _teacherRepository = teacherRepository;
+            _pilotRepository = pilotRepository;
         }
 
         public IStudentRepository StudentRepo
@@ -29,6 +33,11 @@ namespace Airline.BLL.Repository
                 return _studentRepository;
             }
         }
+        public IPilotRepository PilotRepository
+        {
+            get { return _pilotRepository ??= new PilotRepository(_context); }
+        }
+
 
         public IStudDiscRepository StudDiscRepo
         {

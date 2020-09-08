@@ -8,49 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 
-namespace Airline_Yurchenko.Controllers
+namespace Airline_Yurchenko.Controllers.Personal
 {
-    public class Team_PersonController : Controller
+    public class Radio_operatorController : Controller
     {
         private readonly AirlineContext _context;
 
-        public Team_PersonController(AirlineContext context)
+        public Radio_operatorController(AirlineContext context)
         {
             _context = context;
         }
-        public IActionResult PersonalList()
-        {
-            return View();
-        }
 
-        // GET: Team_Person
+        // GET: Radio_operator
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Team_Persons.ToListAsync());
+            var airlineContext = _context.Radio_Operators.Include(r => r.Team_Person);
+            return View(await airlineContext.ToListAsync());
         }
 
-
-
-        [HttpGet]
-        public async Task <ActionResult> TeamDetails(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            Team_Person team_Person = _context.Team_Persons.Include(t => t.Pilots).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Radio_Operators).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Stewardesses).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Navigators).FirstOrDefault(t => t.Id == id);
-            if (team_Person == null)
-            {
-                return NotFound();
-            }
-            return View(team_Person);
-        }
-
-
-        // GET: Team_Person/Details/5
+        // GET: Radio_operator/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -58,39 +34,42 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons
+            var radio_operator = await _context.Radio_Operators
+                .Include(r => r.Team_Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (team_Person == null)
+            if (radio_operator == null)
             {
                 return NotFound();
             }
 
-            return View(team_Person);
+            return View(radio_operator);
         }
 
-        // GET: Team_Person/Create
+        // GET: Radio_operator/Create
         public IActionResult Create()
         {
+            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team");
             return View();
         }
 
-        // POST: Team_Person/Create
+        // POST: Radio_operator/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name_Team,Id")] Team_Person team_Person)
+        public async Task<IActionResult> Create([Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Radio_operator radio_operator)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(team_Person);
+                _context.Add(radio_operator);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(team_Person);
+            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", radio_operator.Team_PersonId);
+            return View(radio_operator);
         }
 
-        // GET: Team_Person/Edit/5
+        // GET: Radio_operator/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,22 +77,23 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons.FindAsync(id);
-            if (team_Person == null)
+            var radio_operator = await _context.Radio_Operators.FindAsync(id);
+            if (radio_operator == null)
             {
                 return NotFound();
             }
-            return View(team_Person);
+            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", radio_operator.Team_PersonId);
+            return View(radio_operator);
         }
 
-        // POST: Team_Person/Edit/5
+        // POST: Radio_operator/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name_Team,Id")] Team_Person team_Person)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Radio_operator radio_operator)
         {
-            if (id != team_Person.Id)
+            if (id != radio_operator.Id)
             {
                 return NotFound();
             }
@@ -122,12 +102,12 @@ namespace Airline_Yurchenko.Controllers
             {
                 try
                 {
-                    _context.Update(team_Person);
+                    _context.Update(radio_operator);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Team_PersonExists(team_Person.Id))
+                    if (!Radio_operatorExists(radio_operator.Id))
                     {
                         return NotFound();
                     }
@@ -138,10 +118,11 @@ namespace Airline_Yurchenko.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(team_Person);
+            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", radio_operator.Team_PersonId);
+            return View(radio_operator);
         }
 
-        // GET: Team_Person/Delete/5
+        // GET: Radio_operator/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,30 +130,31 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons
+            var radio_operator = await _context.Radio_Operators
+                .Include(r => r.Team_Person)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (team_Person == null)
+            if (radio_operator == null)
             {
                 return NotFound();
             }
 
-            return View(team_Person);
+            return View(radio_operator);
         }
 
-        // POST: Team_Person/Delete/5
+        // POST: Radio_operator/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team_Person = await _context.Team_Persons.FindAsync(id);
-            _context.Team_Persons.Remove(team_Person);
+            var radio_operator = await _context.Radio_Operators.FindAsync(id);
+            _context.Radio_Operators.Remove(radio_operator);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool Team_PersonExists(int id)
+        private bool Radio_operatorExists(int id)
         {
-            return _context.Team_Persons.Any(e => e.Id == id);
+            return _context.Radio_Operators.Any(e => e.Id == id);
         }
     }
 }

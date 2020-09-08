@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Airline.DAL.IRepository.IEntityRepository;
 
 namespace Airline.DAL.IRepository
 {
@@ -11,6 +12,7 @@ namespace Airline.DAL.IRepository
         IStudentRepository StudentRepo { get; }
         IStudDiscRepository StudDiscRepo { get; }
         ITeacherRepository TeacherRepository { get; }
+        IPilotRepository PilotRepository{ get; }
         void Save();
 
     }
