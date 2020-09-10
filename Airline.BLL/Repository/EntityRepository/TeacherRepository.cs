@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Airline.DAL.IRepository;
 using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,10 +24,10 @@ namespace Airline.BLL.Repository.EntityRepository
             return new SelectList(a, "Id", "Name");
         }
 
-        public SelectList SelectListTeacherName(int? defaultItemId)
+        public SelectList SelectListTeacherName(int? selectId)
         {
             return new SelectList(_dbSet.OrderBy(c => c.Name)
-                .AsNoTracking(), "Id", "Name", defaultItemId);
+                .AsNoTracking(), "Id", "Name", selectId);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Airline.DAL.IRepository
         IStudDiscRepository StudDiscRepo { get; }
         ITeacherRepository TeacherRepository { get; }
         IPilotRepository PilotRepository{ get; }
+        INavigatorRepository NavigatorRepository{ get; }
         void Save();
 
     }

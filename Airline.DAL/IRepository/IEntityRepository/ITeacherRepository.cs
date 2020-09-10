@@ -8,6 +8,6 @@ namespace Airline.DAL.IRepository.IEntityRepository
     {
         IQueryable<Teacher> GetAllOrderedByName();
         SelectList SelectListTeacherName();
-        SelectList SelectListTeacherName(int? defaultItemId);
+        SelectList SelectListTeacherName(int? selectId);
     }
 }

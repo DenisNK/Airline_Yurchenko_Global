@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.IRepository;
 using Airline.DAL.Models;
 using Airline_Yurchenko.Areas.AccountFilters;
@@ -17,7 +16,7 @@ namespace Airline_Yurchenko.Controllers
 
         private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public SelectStudentDisciplinesController(AirlineContext context, IRepositoryWrapper repositoryWrapper)
+        public SelectStudentDisciplinesController(IRepositoryWrapper repositoryWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
         }

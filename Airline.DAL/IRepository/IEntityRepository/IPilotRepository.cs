@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Airline.DAL.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Airline.DAL.IRepository.IEntityRepository
 {
@@ -9,6 +10,8 @@ namespace Airline.DAL.IRepository.IEntityRepository
     {
         Task<Pilot> MyDiscUnique(Expression<Func<Pilot, bool>> predicate);
         Task<Pilot> GetPilotcByIdWithTeamAsync(int? id);
+        SelectList SelectListTeamName();
+        SelectList SelectListTeamName(int? selectId);
 
     }
 }

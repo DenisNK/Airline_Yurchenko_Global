@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,9 +35,7 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            var pilot = await _context.Pilots
-                .Include(p => p.Team_Person)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pilot = await _repositoryWrapper.PilotRepository.GetPilotcByIdWithTeamAsync(id);
             if (pilot == null)
             {
                 return NotFound();
@@ -51,7 +47,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         // GET: Pilots/Create
         public IActionResult Create()
         {
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team");
+            //ViewData["Team_PersonId"] = _repositoryWrapper.PilotRepository. new SelectList(_context.Team_Persons, "Id", "Name_Team");
             return View();
         }
 

@@ -78,6 +78,8 @@ namespace Airline.BLL.Repository
             }
         }
 
+        public INavigatorRepository NavigatorRepository => throw new System.NotImplementedException();
+
         public void Save()
         {
             _context.SaveChanges();
