@@ -44,13 +44,13 @@ namespace Airline_Yurchenko
                 .AddEntityFrameworkStores<AirlineContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(ADMIN,
-            //        t => t.RequireAssertion(
-            //            context => !context.User.Claims.Any(c => c.Type == STUDENTID)
-            //        ));
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(ADMIN,
+                    t => t.RequireAssertion(
+                        context => !context.User.Claims.Any(c => c.Type == STUDENTID)
+                    ));
+            });
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
                            
@@ -106,7 +106,7 @@ namespace Airline_Yurchenko
     public partial class Startup
     {
         #region Constants
-        private const string DEFAULT_PATH = "{controller=Home}/{action=Index}";
+        private const string DEFAULT_PATH = "{controller=Home}/{action=Index}/{id?}";
         private const string DEFAULT_CONNECTION = "DefaultConnection";
         private const string HOME_ERROR = "/Home/Error";
         private const string DEFAULT = "default";
