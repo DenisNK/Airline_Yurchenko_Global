@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Airline.BLL.Repository.EntityRepository
 {
@@ -31,7 +29,7 @@ namespace Airline.BLL.Repository.EntityRepository
     
         public Task<Navigator> MyDiscUnique(Expression<Func<Navigator, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _context.Set<Navigator>().FirstOrDefaultAsync(predicate);
         }
     }
 }

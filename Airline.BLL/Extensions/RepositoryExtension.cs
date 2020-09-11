@@ -17,6 +17,7 @@ namespace Airline.BLL.Extensions
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<IPilotRepository, PilotRepository>();
             services.AddScoped<INavigatorRepository, NavigatorRepository>();
+            services.AddScoped<ITeamPersonRepository, TeamPersonRepository>();
 
             return services;
         }

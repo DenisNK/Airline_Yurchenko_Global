@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Airline.DAL.IRepository;
 
 namespace Airline.DAL.Models
 {
-    public class Team_Person : BaseId
+    public class Team_Person : BaseId, IEntity
     {
         public string Name_Team { get; set; }
 

@@ -14,6 +14,7 @@ namespace Airline.DAL.IRepository
         ITeacherRepository TeacherRepository { get; }
         IPilotRepository PilotRepository{ get; }
         INavigatorRepository NavigatorRepository{ get; }
+        ITeamPersonRepository TeamPersonRepository { get; }
         void Save();
 
     }

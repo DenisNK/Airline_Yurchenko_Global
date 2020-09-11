@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.IRepository;
@@ -47,7 +46,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         // GET: Pilots/Create
         public IActionResult Create()
         {
-            //ViewData["Team_PersonId"] = _repositoryWrapper.PilotRepository. new SelectList(_context.Team_Persons, "Id", "Name_Team");
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName();
             return View();
         }
 
@@ -64,7 +63,7 @@ namespace Airline_Yurchenko.Controllers.Personal
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", pilot.Team_PersonId);
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
             return View(pilot);
         }
 
@@ -76,12 +75,13 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            var pilot = await _context.Pilots.FindAsync(id);
+            var pilot = await _repositoryWrapper.PilotRepository.GetById(id);// _context.Pilots.FindAsync(id);
             if (pilot == null)
             {
                 return NotFound();
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", pilot.Team_PersonId);
+
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(id);// new SelectList(_context.Team_Persons, "Id", "Name_Team", pilot.Team_PersonId);
             return View(pilot);
         }
 
@@ -101,8 +101,7 @@ namespace Airline_Yurchenko.Controllers.Personal
             {
                 try
                 {
-                    _context.Update(pilot);
-                    await _context.SaveChangesAsync();
+                   await _repositoryWrapper.PilotRepository.Update(id, pilot);// _context.Update(pilot);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,7 +116,8 @@ namespace Airline_Yurchenko.Controllers.Personal
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", pilot.Team_PersonId);
+
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
             return View(pilot);
         }
 
@@ -129,9 +129,8 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            var pilot = await _context.Pilots
-                .Include(p => p.Team_Person)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pilot = await _repositoryWrapper.PilotRepository.GetPilotcByIdWithTeamAsync(id);// await _context.Pilots
+               
             if (pilot == null)
             {
                 return NotFound();
@@ -145,9 +144,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pilot = await _context.Pilots.FindAsync(id);
-            _context.Pilots.Remove(pilot);
-            await _context.SaveChangesAsync();
+            await _repositoryWrapper.PilotRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 

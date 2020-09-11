@@ -10,8 +10,7 @@ namespace Airline.DAL.IRepository.IEntityRepository
     {
         Task<Pilot> MyDiscUnique(Expression<Func<Pilot, bool>> predicate);
         Task<Pilot> GetPilotcByIdWithTeamAsync(int? id);
-        SelectList SelectListTeamName();
-        SelectList SelectListTeamName(int? selectId);
 
+      
     }
 }

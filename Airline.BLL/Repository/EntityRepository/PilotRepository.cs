@@ -25,21 +25,6 @@ namespace Airline.BLL.Repository.EntityRepository
             return _context.Set<Pilot>().FirstOrDefaultAsync(predicate);
         }
 
-        public SelectList SelectListTeamName()
-        {
-            var a = _dbSet
-                .OrderBy(c => c.Name)
-                .AsNoTracking();
-
-            return new SelectList(a, "Id", "Name");
-        }
-
-        public SelectList SelectListTeamName(int? selectId)
-        {
-            return new SelectList(_dbSet.OrderBy(c => c.Name)
-                .AsNoTracking(), "Id", "Name", selectId);
-        }
-
         private Pilot GetPilotcByIdWithTeam(int? id)
         {
             return _dbSet

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 using Airline_Yurchenko.Areas.AccountFilters;
-using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Airline_Yurchenko.Controllers
@@ -25,9 +22,7 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // GET: Fligths
-        // [AllowAnonymous]
-        //[ForStudent]
-        //  [Authorize(Roles = "student")] 
+       
           //[Authorize(Roles = "admin")]
              [AllowAnonymous]
         public async Task<IActionResult> Index()
@@ -38,10 +33,7 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // GET: Fligths/Details/5
-        //[ForAdmin]
-        //[AllowAnonymous]
-        //[ForStudent]
-        //[Authorize(Roles = "admin" )]
+       
      //   [Authorize(Roles = "student")]
      [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
