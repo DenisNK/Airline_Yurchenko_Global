@@ -59,8 +59,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pilot);
-                await _context.SaveChangesAsync();
+                await _repositoryWrapper.PilotRepository.Create(pilot);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
@@ -97,28 +96,17 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                   await _repositoryWrapper.PilotRepository.Update(id, pilot);// _context.Update(pilot);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PilotExists(pilot.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                return View(pilot);
+            }
+            else
+            {
+                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
+                await _repositoryWrapper.PilotRepository.Update(id, pilot); // _context.Update(pilot);
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
-            return View(pilot);
         }
 
         // GET: Pilots/Delete/5
@@ -148,9 +136,5 @@ namespace Airline_Yurchenko.Controllers.Personal
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PilotExists(int id)
-        {
-            return _context.Pilots.Any(e => e.Id == id);
-        }
     }
 }

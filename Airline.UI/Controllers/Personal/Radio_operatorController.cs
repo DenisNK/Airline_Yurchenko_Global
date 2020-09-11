@@ -87,8 +87,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         }
 
         // POST: Radio_operator/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Radio_operator radio_operator)
@@ -98,28 +97,30 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(radio_operator);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!Radio_operatorExists(radio_operator.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ViewData["Team_PersonId"] =
+                    new SelectList(_context.Team_Persons, "Id", "Name_Team", radio_operator.Team_PersonId);
+                return View(radio_operator);
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", radio_operator.Team_PersonId);
-            return View(radio_operator);
+
+            try
+            {
+                _context.Update(radio_operator);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!Radio_operatorExists(radio_operator.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Radio_operator/Delete/5

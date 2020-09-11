@@ -6,17 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.IRepository;
+using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 
 namespace Airline_Yurchenko.Controllers
 {
     public class Team_PersonController : Controller
     {
-        private readonly AirlineContext _context;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public Team_PersonController(AirlineContext context)
+        public Team_PersonController(IRepositoryWrapper repositoryWrapper)
         {
-            _context = context;
+            _repositoryWrapper = repositoryWrapper;
         }
         public IActionResult PersonalList()
         {
@@ -24,13 +26,11 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // GET: Team_Person
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Team_Persons.ToListAsync());
+            return View(_repositoryWrapper.TeamPersonRepository.Get());
         }
-
-
-
+                      
         [HttpGet]
         public async Task <ActionResult> TeamDetails(int? id)
         {
@@ -38,15 +38,14 @@ namespace Airline_Yurchenko.Controllers
             {
                 return NotFound();
             }
-            Team_Person team_Person = _context.Team_Persons.Include(t => t.Pilots).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Radio_Operators).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Stewardesses).FirstOrDefault(t => t.Id == id);
-            team_Person = _context.Team_Persons.Include(t => t.Navigators).FirstOrDefault(t => t.Id == id);
-            if (team_Person == null)
+
+            var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetTeamByIdWithAllTeamAsync(id);
+        
+            if (teamPerson == null)
             {
                 return NotFound();
             }
-            return View(team_Person);
+            return View(teamPerson);
         }
 
 
@@ -58,14 +57,13 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (team_Person == null)
+            var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
+            if (teamPerson == null)
             {
                 return NotFound();
             }
 
-            return View(team_Person);
+            return View(teamPerson);
         }
 
         // GET: Team_Person/Create
@@ -73,21 +71,17 @@ namespace Airline_Yurchenko.Controllers
         {
             return View();
         }
-
-        // POST: Team_Person/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name_Team,Id")] Team_Person team_Person)
+        public async Task<IActionResult> Create([Bind("Name_Team,Id")] Team_Person teamPerson)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(team_Person);
-                await _context.SaveChangesAsync();
+                await _repositoryWrapper.TeamPersonRepository.Create(teamPerson);
                 return RedirectToAction(nameof(Index));
             }
-            return View(team_Person);
+            return View(teamPerson);
         }
 
         // GET: Team_Person/Edit/5
@@ -98,47 +92,30 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons.FindAsync(id);
-            if (team_Person == null)
+            var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
+            if (teamPerson == null)
             {
                 return NotFound();
             }
-            return View(team_Person);
+            return View(teamPerson);
         }
 
         // POST: Team_Person/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name_Team,Id")] Team_Person team_Person)
+        public async Task<IActionResult> Edit(int id, [Bind("Name_Team,Id")] Team_Person teamPerson)
         {
-            if (id != team_Person.Id)
+            if (id != teamPerson.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(team_Person);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!Team_PersonExists(team_Person.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(team_Person);
+            if (!ModelState.IsValid) 
+                return View(teamPerson);
+
+            await _repositoryWrapper.TeamPersonRepository.Update(id, teamPerson);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Team_Person/Delete/5
@@ -149,14 +126,13 @@ namespace Airline_Yurchenko.Controllers
                 return NotFound();
             }
 
-            var team_Person = await _context.Team_Persons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (team_Person == null)
+            var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
+            if (teamPerson == null)
             {
                 return NotFound();
             }
 
-            return View(team_Person);
+            return View(teamPerson);
         }
 
         // POST: Team_Person/Delete/5
@@ -164,15 +140,10 @@ namespace Airline_Yurchenko.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team_Person = await _context.Team_Persons.FindAsync(id);
-            _context.Team_Persons.Remove(team_Person);
-            await _context.SaveChangesAsync();
+            await _repositoryWrapper.TeamPersonRepository.Delete(id);
+            
             return RedirectToAction(nameof(Index));
         }
-
-        private bool Team_PersonExists(int id)
-        {
-            return _context.Team_Persons.Any(e => e.Id == id);
-        }
+        
     }
 }
