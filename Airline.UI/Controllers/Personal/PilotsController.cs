@@ -1,28 +1,23 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.IRepository;
 using Airline.DAL.Models;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
+    
     public class PilotsController : Controller
     {
-        private readonly AirlineContext _context;
         private readonly IRepositoryWrapper _repositoryWrapper;
-
-        public PilotsController(AirlineContext context, IRepositoryWrapper repositoryWrapper)
+        public PilotsController(IRepositoryWrapper repositoryWrapper)
         {
-            _context = context;
             _repositoryWrapper = repositoryWrapper;
         }
 
         // GET: Pilots
         public IActionResult Index()
         {
-            var airlineContext =_repositoryWrapper.PilotRepository.GetWithInclude(t=>t.Team_Person);
+            var airlineContext = _repositoryWrapper.PilotRepository.GetAllPilot();
             return View(airlineContext);
         }
 
@@ -50,46 +45,44 @@ namespace Airline_Yurchenko.Controllers.Personal
             return View();
         }
 
-        // POST: Pilots/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Pilot pilot)
+        public async Task<IActionResult> Create(Pilot pilot)
         {
             if (ModelState.IsValid)
             {
-                await _repositoryWrapper.PilotRepository.Create(pilot);
+                await _repositoryWrapper.PilotRepository.CreateWithImage(pilot);
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
             return View(pilot);
         }
-
+        
         // GET: Pilots/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
 
-            var pilot = await _repositoryWrapper.PilotRepository.GetById(id);// _context.Pilots.FindAsync(id);
+            var pilot = await _repositoryWrapper.PilotRepository.GetById(id);
             if (pilot == null)
             {
                 return NotFound();
             }
 
-            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(id);// new SelectList(_context.Team_Persons, "Id", "Name_Team", pilot.Team_PersonId);
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(id);
             return View(pilot);
         }
 
         // POST: Pilots/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Pilot pilot)
+        public async Task<IActionResult> Edit(int id,  Pilot pilot)
         {
             if (id != pilot.Id)
             {
@@ -102,8 +95,9 @@ namespace Airline_Yurchenko.Controllers.Personal
             }
             else
             {
-                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
-                await _repositoryWrapper.PilotRepository.Update(id, pilot); // _context.Update(pilot);
+                ViewData["Team_PersonId"] =
+                    _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
+                await _repositoryWrapper.PilotRepository.GetByIdWithImage(id, pilot);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -117,8 +111,9 @@ namespace Airline_Yurchenko.Controllers.Personal
                 return NotFound();
             }
 
-            var pilot = await _repositoryWrapper.PilotRepository.GetPilotcByIdWithTeamAsync(id);// await _context.Pilots
-               
+            var pilot = await _repositoryWrapper.PilotRepository
+                .GetPilotcByIdWithTeamAsync(id); // await _context.Pilots
+
             if (pilot == null)
             {
                 return NotFound();
@@ -135,6 +130,5 @@ namespace Airline_Yurchenko.Controllers.Personal
             await _repositoryWrapper.PilotRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

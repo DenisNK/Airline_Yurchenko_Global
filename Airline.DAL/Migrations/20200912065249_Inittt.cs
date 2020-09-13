@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Airline.DAL.Migrations
 {
-    public partial class Init : Migration
+    public partial class Inittt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace Airline.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name_Country = table.Column<string>(nullable: true)
+                    Name_Country = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,8 +211,8 @@ namespace Airline.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name_City = table.Column<string>(maxLength: 20, nullable: false),
-                    AirportCode = table.Column<string>(nullable: false),
+                    Name_City = table.Column<string>(maxLength: 30, nullable: false),
+                    AirportCode = table.Column<string>(maxLength: 30, nullable: false),
                     CountryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -282,6 +282,7 @@ namespace Airline.DAL.Migrations
                     Age = table.Column<int>(nullable: false),
                     Experience = table.Column<int>(nullable: false),
                     Salary = table.Column<int>(nullable: false),
+                    ProfilePicture = table.Column<string>(nullable: true),
                     Team_PersonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

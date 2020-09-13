@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 
+
 namespace Airline_Yurchenko.Controllers.Personal
 {
     public class NavigatorsController : Controller
     {
         private readonly AirlineContext _context;
-
+        
         public NavigatorsController(AirlineContext context)
         {
             _context = context;

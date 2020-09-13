@@ -1,19 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Airline.DAL.IRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.BLL.Repository
 {
     public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
+
         protected DbContext _context;
         protected DbSet<TEntity> _dbSet;
 
+        protected string UploadedFile(IFormFile profileImage)
+        {
+            string uniqueFileName = null;
+
+            if (profileImage != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot", "images"); // absolute path ??
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + profileImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                profileImage.CopyTo(fileStream);
+            }
+
+            return uniqueFileName;
+        }
         public Repository(DbContext context)
         {
             _context = context;

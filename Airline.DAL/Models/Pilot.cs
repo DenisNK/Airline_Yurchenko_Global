@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Airline.DAL.IRepository;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline.DAL.Models
 {
@@ -25,6 +27,11 @@ namespace Airline.DAL.Models
         [Range(100, 5000)]
         public int Salary { get; set; }
 
+        [FileExtensions(Extensions = "jpg,png,gif,jpeg,bmp,svg")]
+        public string ProfilePicture { get; set; }
+                             
+        [Display(Name = "Profile Picture")]
+        public IFormFile ProfileImage { get; set; }
         public int? Team_PersonId { get; set; }
         public virtual Team_Person Team_Person { get; set; }
     }

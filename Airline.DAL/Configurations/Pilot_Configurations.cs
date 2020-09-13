@@ -21,6 +21,8 @@ namespace Airline.DAL.Configurations
             builder.Property(p => p.Surname)
                 .IsRequired()
                 .HasMaxLength(30);
+
+            builder.Ignore(img => img.ProfileImage);
         }
     }
 }

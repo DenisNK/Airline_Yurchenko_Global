@@ -31,8 +31,8 @@ namespace Airline_Yurchenko
                 Configuration.GetConnectionString(DEFAULT_CONNECTION)));
 
             services.AddRepositories();
-       
-            services.AddScoped<DbContext, AirlineContext>();
+            services.AddScoped(typeof(IMyImage<>), typeof(MyImage<>));
+            services.AddScoped<DbContext, AirlineContext>();                               
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 {
