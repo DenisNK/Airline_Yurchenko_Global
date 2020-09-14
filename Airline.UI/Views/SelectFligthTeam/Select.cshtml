@@ -8,15 +8,20 @@
 
 <h1> Student @Model.Fligth.Name_Fligth</h1>
 <div class="container">
+@if (Model == null || Model.IsChoose.Count() == 0)
+{
+    <p>Here is no requests :)</p>
+}
+else
+{
     <form asp-action="Select" method="post">
         @foreach (var item in Model.IsChoose)
         {
-         
-        <a asp-controller="Team_Person" asp-action="TeamDetails" asp-route-id="@item.Id">@item.Name_Team</a>
+            <a asp-controller="Team_Person" asp-action="TeamDetails" asp-route-id="@item.Id">@item.Name_Team</a>
         }
-        
-        
-        
+
+
+
         @*@foreach (var item in Model.NoChoose)
         {
             <div class="checkbox">
@@ -31,7 +36,7 @@
         </div>*@
 
         
-
-        <input type="hidden" name="studentId" value="@Model.Fligth.Id" />
+        <input type="hidden" name="studentId" value="@Model.Fligth.Id"/>
     </form>
+}
 </div>

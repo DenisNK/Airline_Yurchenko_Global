@@ -2,28 +2,27 @@
 @using Microsoft.AspNetCore.Identity
 
 @model IEnumerable<Airline.DAL.Models.Fligth>
- Airline.DAL.Models.Fligth
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
 <div class="text-center ">
-    <h1 style="font-family: 'Comic Sans MS'">
-        <img src="~/Content/Images/FligthRevers.jpg" width="50" height="50" />
-        @Html.DisplayNameFor(model => model.Name_Fligth) = Fligth
-        <img src="~/Content/Images/Fligth1.jpg" width="50" height="50" />
+    <h1>
+        <img src="~/Content/Images/FligthRevers.jpg" width="50" height="50" alt="Fligth" />
+        Fligth List
+        <img src="~/Content/Images/Fligth1.jpg" width="50" height="50" alt="Fligth" />
     </h1>
 </div>
+
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin") || User.IsInRole("student"))
 {
     <p>
         <a asp-action="Create">Create New</a>
     </p>
 }
-<table class="table">
+<table class="table table-bordered alert-dismissible">
+
     <thead>
-        <tr>
+        <tr class="alert-info">
             <th>
                 @Html.DisplayNameFor(model => model.Name_Fligth)
             </th>
@@ -40,12 +39,23 @@
                 @Html.DisplayNameFor(model => model.ArrivalDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FromCountry)
+            </th>
+            <!--<th>
+                To-->
+                @*@Html.DisplayNameFor(model => model.WhereCountry)*@
+            <!--</th>-->
+            <th>
                 @Html.DisplayNameFor(model => model.IsConfirmed)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
+
+            <th>
+                More_Information
+            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -54,12 +64,14 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name_Fligth)
+                    <h6 class="small">@Html.DisplayFor(modelItem => item.FromCity.AirportCode)@Html.DisplayFor(modelItem => item.FromCity.Id)⇾@Html.DisplayFor(modelItem => item.WhereCity.AirportCode)@Html.DisplayFor(modelItem => item.WhereCity.Id)</h6>
+                    <img src="~/Content/Images/Fligth.png" width="50" height="40" alt="Fligth" />
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FromCity.AirportCode)
+                    @Html.DisplayFor(modelItem => item.FromCity.Name_City)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.WhereCity.AirportCode)
+                    @Html.DisplayFor(modelItem => item.WhereCity.Name_City)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DepartureDate)
@@ -68,20 +80,30 @@
                     @Html.DisplayFor(modelItem => item.ArrivalDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsConfirmed)
+                    @Html.DisplayFor(modelItem => item.FromCity.Country.Name_Country)
+                    ⇾
+                    @Html.DisplayFor(modelItem => item.WhereCity.Country.Name_Country)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @if (item.IsConfirmed == true)
+                    {
+                        <div class="btn-success btn-sm rounded  text-center ">Ready</div>
+                    }
+                    else
+                    { <div class="btn-danger rounded  btn-sm  text-center">Not ready</div>}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)$
                 </td>
 
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <td class="col-lg-auto">
+                    <a class="btn btn-info w-75 ml-3 mb-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
 
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        <a asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
+                        <a class="btn btn-info small " asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+                        <a class="btn btn-danger small " asp-action="Delete" asp-route-id="@item.Id">Del</a>
+                        <a class="btn btn-warning small w-25" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
                     }
 
                 </td>

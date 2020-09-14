@@ -1,24 +1,35 @@
 ﻿@model Airline_Yurchenko.Areas.IdentityViewModels.LoginViewModel
 
-<h2>Вход в приложение</h2>
-<form method="post" asp-controller="Account" asp-action="Login"
-      asp-route-returnUrl="@Model.ReturnUrl">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="Name"></label><br />
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Войти" />
-    </div>
-</form>
+<h1>Login</h1>
+<div class="d-flex justify-content-center">
+<div class="form-group col-7 border border-info rounded ">
+    <div class="text-center">
+
+        <h2>Login</h2>
+    </div> 
+    <hr />
+    <form method="post" asp-controller="Account" asp-action="Login" class="form-group text-center align-content-center"
+          asp-route-returnUrl="@Model.ReturnUrl">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label  asp-for="Name"></label>
+            
+
+            <input class="col-md-9" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label  asp-for="Password"></label>
+            <input class="col-md-9 " asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="RememberMe"></label><br />
+            <input asp-for="RememberMe" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary m-2">Login</button>
+        </div>
+    </form>
+</div>
+</div>

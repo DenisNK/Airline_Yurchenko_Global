@@ -11,56 +11,51 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Airline</a>
+                <a class="navbar-light " asp-area="" asp-controller="Home" asp-action="Index">Welcome to Airline</a>
+                <img src="~/Content/Images/Airline.png" width="130" height="80" alt=""/>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
+
+                    
                     <ul class="navbar-nav flex-grow-1">
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
                         {
-                            <li class="nav-item">
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Student</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Disciplines" asp-action="Index">Disciplines</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teachers" asp-action="Index">Teachers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="StudDiscs" asp-action="Index">StudDiscs</a>
-                            </li>
-                            <li class="nav-item">
+
+
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                             </li>
-                        
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="FligthTeams" asp-action="Index">RoleFligthTeams</a>
-                            </li>
-                            <li class="nav-item">
+
+
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Team_Person" asp-action="Index">Team_Person</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item btn btn-info m-3">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Team_Person" asp-action="PersonalList">PersonalList</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Create">createFligth</a>
-                            </li>
+
                         }
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("student"))
                         {
@@ -76,7 +71,11 @@
                             </li>
                         }
                     </ul>
+                    
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <partial name="_LoginPartial" />
+                </ul>
             </div>
         </nav>
     </header>
@@ -85,11 +84,111 @@
             @RenderBody()
         </main>
     </div>
+    <footer class="page-footer font-small mdb-color lighten-3 pt-4">
 
-    <footer class="border-top footer text-muted">
+        <!-- Footer Elements -->
         <div class="container">
-            &copy; 2020 - Airline - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-12 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air1.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-6 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air2.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-6 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air3.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-12 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air4.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-6 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air6.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-2 col-md-6 mb-4">
+
+                    <!--Image-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src="~/Content/Images/Air7.jpg" class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+            An airline is a company that provides air transport services for traveling passengers and freight. Airlines utilize aircraft to supply these services, and may form partnerships or alliances with other airlines for codeshare agreements. Generally, airline companies are recognized with an air operating certificate or license issued by a governmental aviation body.
         </div>
+        <!-- Footer Elements -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            <a>© 2019 : Denis Yurchenko</a>
+            <p>Final Task </p>
+        </div>
+        <!-- Copyright -->
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

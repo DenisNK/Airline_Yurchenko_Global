@@ -22,9 +22,9 @@ namespace Airline.BLL.Repository
 
             if (profileImage != null)
             {
-                string uploadsFolder = Path.Combine("wwwroot", "images"); // absolute path ??
+                var uploadsFolder = Path.Combine("wwwroot", "images"); // absolute path ??
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + profileImage.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 profileImage.CopyTo(fileStream);
             }

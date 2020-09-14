@@ -27,7 +27,7 @@ namespace Airline_Yurchenko.Controllers
              [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var airlineContext =  _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity).Where(e=>e.IsConfirmed);
+            var airlineContext =  _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity).Include(r=>r.FromCity.Country).Include(t=>t.WhereCity.Country);
             return View(await airlineContext.ToListAsync());
 
         }

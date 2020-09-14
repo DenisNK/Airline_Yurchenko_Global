@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Airline.DAL.Initializator
+﻿namespace Airline.DAL.Initializator
 {
     public static class Constants
     {

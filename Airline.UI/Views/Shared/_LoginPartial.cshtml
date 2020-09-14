@@ -9,16 +9,15 @@
 @if (User.Identity.IsAuthenticated)
 {
     <p>@User.Identity.Name</p>
-
     <form method="post" asp-controller="Account" asp-action="Logout">
-        <input type="submit" value="Выход" />
-    </form>
+        <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
 }
 else
 {
-    <a asp-controller="Account" asp-action="Login">Вход</a>
+    <a class="btn btn-info"  asp-controller="Account" asp-action="Login">Login</a>
     @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
     {
-        <a asp-controller="Students" asp-action="Create">Регистрация</a>
+        <a class="btn btn-info" asp-controller="Students" asp-action="Create">Register</a>
     }
 }

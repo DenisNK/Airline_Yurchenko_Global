@@ -107,3 +107,6 @@ a:hover {
     -webkit-transition: all 1.3s ease-in-out;
 }
 
+h1 {
+    font-family: 'Comic Sans MS'
+}

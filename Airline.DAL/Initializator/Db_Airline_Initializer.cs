@@ -25,9 +25,9 @@ namespace Airline.DAL.Initializator
             if (!context.Countries.Any())
             {
                 context.Countries.AddRange(
-                new Country { Name_Country = "Ukraine" },
+                new Country { Name_Country = "CHINA" },
                  new Country { Name_Country = "USA" },
-                 new Country { Name_Country = "CHINA" });
+                 new Country { Name_Country = "Ukraine" });
 
                 context.SaveChanges();
             }
@@ -62,9 +62,10 @@ namespace Airline.DAL.Initializator
             if (!context.Pilots.Any())
             {
                 context.Pilots.AddRange(
-                    new Pilot { Name = "Pilot1", Experience = 8, Age = 44, Salary = 4320, Surname = "Surmane_1", Team_PersonId = 1 },
-                new Pilot { Name = "Pilot2", Experience = 12, Age = 33, Salary = 2451, Surname = "Surmane_2", Team_PersonId = 2 },
-                new Pilot { Name = "Pilot3", Experience = 3, Age = 33, Salary = 2024, Surname = "Surmane_3", Team_PersonId = 3 });
+                    new Pilot { Name = "Pilot1", Experience = 8, Age = 44, Salary = 4320, Surname = "Surmane_1", ProfilePicture = "46f4a1d1-c375-4bdf-9b46-469b9345bf28_Pilot_logo (1).png", Team_PersonId = 1 },
+                new Pilot { Name = "Pilot2", Experience = 12, Age = 33, Salary = 3451, Surname = "Surmane_2", ProfilePicture = "9471465b-18f0-405e-8b17-913f89e78fe8_Pilot_logo (2).png", Team_PersonId = 2 },
+                new Pilot { Name = "Pilot3", Experience = 3, Age = 43, Salary = 3084, Surname = "Surmane_3", ProfilePicture = "d86c0f0a-3ccf-4516-a671-d1930d47122f_Pilot_logo (4).png", Team_PersonId = 3 },
+                new Pilot { Name = "Pilot4", Experience = 23, Age = 28, Salary = 2524, Surname = "Surmane_4", ProfilePicture = "e5de017b-7479-4e7c-bd7e-9a5586616bd9_Pilot_logo (3).png", Team_PersonId = 4 });
 
                 context.SaveChanges();
             }
