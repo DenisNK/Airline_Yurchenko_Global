@@ -10,7 +10,7 @@
         public const string STUDENT = "student"; // role "student"
         public const string STUDENTID = "studentId"; // student
 
-        public const string NAVIGATORID = "NavigatorId"; // 
+        public const string DISPATCHER = "dispatcher"; // 
 
 
         /// Table name

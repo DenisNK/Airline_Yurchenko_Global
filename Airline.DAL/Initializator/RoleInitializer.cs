@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using static Airline.DAL.Initializator.Constants;
 namespace Airline.DAL.Initializator
@@ -11,7 +8,11 @@ namespace Airline.DAL.Initializator
         public static async Task InitializeAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             const string adminEmail = "Admin@gmail.com";
-            const string password = "Admin@gmail.com1";
+            const string adminPassword = "Admin@gmail.com1"; 
+            
+            const string dispatcherEmail = "Dispatcher@gmail.com";
+            const string dispatcherPassword = "Dispatcher@gmail.com1";
+
             if (await roleManager.FindByNameAsync(ADMIN) == null)
             {
                 await roleManager.CreateAsync(new IdentityRole(ADMIN));
@@ -20,14 +21,28 @@ namespace Airline.DAL.Initializator
             {
                 await roleManager.CreateAsync(new IdentityRole(STUDENT));
             }
+            if (await roleManager.FindByNameAsync(DISPATCHER) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(DISPATCHER));
+            }
 
             if (await userManager.FindByNameAsync(adminEmail) == null) // Create new userAdmin if not exist
             {
                 var admin = new IdentityUser { Email = adminEmail, UserName = adminEmail };
-                IdentityResult result = await userManager.CreateAsync(admin, password);
+                IdentityResult result = await userManager.CreateAsync(admin, adminPassword);
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, ADMIN);
+                }
+            }
+
+            if (await userManager.FindByNameAsync(dispatcherEmail) == null) // Create new dispatcher if not exist
+            {
+                var dispatcher = new IdentityUser { Email = dispatcherEmail, UserName = dispatcherEmail};
+                IdentityResult result = await userManager.CreateAsync(dispatcher, dispatcherPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(dispatcher, DISPATCHER);
                 }
             }
         }
