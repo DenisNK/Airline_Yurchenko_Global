@@ -107,13 +107,12 @@
 
                         <a class="btn btn-warning small mb-1 w-100" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
                         <a class="btn btn-danger small mb-1 w-100" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        <a class="btn btn-primary small w-100" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
+                        <a class="btn btn-primary small w-100" asp-controller="SelectFligthTeam" asp-action="ListSelectTeamFligth" asp-route-id="@item.Id">Team</a>
 
                     </td>
                 }
 
             </tr>
-
         }
     </tbody>
 </table>

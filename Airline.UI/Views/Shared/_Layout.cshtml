@@ -27,50 +27,50 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
                         {
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Student</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Students" asp-action="Index">Student</a>
                             </li>
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Disciplines" asp-action="Index">Disciplines</a>
-                            </li>
-
-
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Disciplines" asp-action="Index">Disciplines</a>
                             </li>
 
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
+
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            </li>
+
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                             </li>
 
                             
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Team_Person" asp-action="Index">Team_Person</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Team_Person" asp-action="Index">Team_Person</a>
                             </li>
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Team_Person" asp-action="PersonalList">PersonalList</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Team_Person" asp-action="PersonalList">PersonalList</a>
                             </li>
 
                         } 
                         else
                         if (SignInManager.IsSignedIn(User) && User.IsInRole("student"))
                         {
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="SelectStudentDisciplines" asp-action="Index">Select Dicsiplines</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="SelectStudentDisciplines" asp-action="Index">Select Dicsiplines</a>
                             </li>
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                             </li>
 
-                            <li class="nav-item btn btn-info m-3">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Create">createFligth</a>
+                            <li class="nav-item btn btn-outline-info m-3">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Create">createFligth</a>
                             </li>
                         }
                         else{
-                            <li class="nav-item btn btn-info m-3">
+                            <li class="nav-item btn btn-outline-info m-3">
                                  <a class="nav-link text-dark" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                              </li>
 

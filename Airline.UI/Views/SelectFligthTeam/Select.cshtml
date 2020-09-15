@@ -4,39 +4,40 @@
     ViewData["Title"] = "Select";
 }
 
-<h1>Select</h1>
 
-<h1> Student @Model.Fligth.Name_Fligth</h1>
-<div class="container">
-@if (Model == null || Model.IsChoose.Count() == 0)
-{
-    <p>Here is no requests :)</p>
-}
-else
-{
+<h1 class="text-center"> Teams for @Model.Fligth.Name_Fligth</h1>
+<div>
+    <a class="btn btn-outline-success float-right m-2 mt-3" asp-controller="SelectFligthTeam" asp-action="ListSelectTeamFligth" asp-route-id="@Model.Fligth.Id">Back to List</a>
+</div>
+<div class="container border border-info m-2 ">
+
     <form asp-action="Select" method="post">
         @foreach (var item in Model.IsChoose)
         {
-            <a asp-controller="Team_Person" asp-action="TeamDetails" asp-route-id="@item.Id">@item.Name_Team</a>
+            <div class="checkbox form-check-inline m-2 ">
+                <label class="btn btn-outline-primary ">
+                    <input type="checkbox" name="IsChoose" value="@item.Id" checked>
+                    @item.Name_Team
+                </label>
+            </div>
         }
 
+        <hr/>
 
-
-        @*@foreach (var item in Model.NoChoose)
+        @foreach (var item in Model.NoChoose)
         {
-            <div class="checkbox">
-                <label>
+            <div class="checkbox form-check-inline m-2">
+                <label class="btn btn-outline-dark">
                     <input type="checkbox" name="IsChoose" value="@item.Id">
                     @item.Name_Team
                 </label>
             </div>
         }
         <div class="form-group text-center">
-            <input type="submit" class="btn btn-info" value="Submit" />
-        </div>*@
+            <input type="submit" class="btn btn-info" value="Submit"/>
+        </div>
 
-        
-        <input type="hidden" name="studentId" value="@Model.Fligth.Id"/>
+        <input type="hidden" name="fligthId" value="@Model.Fligth.Id"/>
     </form>
-}
+    
 </div>

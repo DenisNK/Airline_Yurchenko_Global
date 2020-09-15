@@ -1,0 +1,41 @@
+﻿@model Airline_Yurchenko.ViewModels.FligthListViewModels
+
+@{
+    ViewData["Title"] = "Select";
+}
+
+<h1 class="text-center pb-2">Teams for @Model.Fligth.Name_Fligth</h1>
+<div class="container">
+    @if (Model == null || Model.IsChoose.Count() == 0)
+    {
+        <div class="card m-2">
+            <div class="card-body">
+                <a class="btn btn-outline-success float-right " asp-controller="Fligths" asp-action="Index">Back to fly</a>
+                <h4>Сommand is empty. <a class="text-primary" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@Model.Fligth.Id"> Create new?</a></h4>
+            </div>
+        </div>
+    }
+    else
+    {
+        <a class="btn btn-info mb-2" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@Model.Fligth.Id"> Add Teams </a>
+        <a class="btn btn-outline-success float-right m-2" asp-controller="Fligths" asp-action="Index">Back to fly</a>
+
+        <div class="card-group border border-bottom p-2 ">
+            <form asp-action="ListSelectTeamFligth" method="post">
+                @foreach (var item in Model.IsChoose)
+                {
+                    <a asp-controller="Team_Person" asp-action="TeamDetails" asp-route-id="@item.Id">
+                        <div class="card float-left m-2 row-cols-4 ">
+                            <img src="~/Content/Airline_Person/team.png" class="card-img-top" alt="Teams">
+                            <div class="card-text">
+                                <h4 class="card-title text-center"> @item.Name_Team</h4>
+                            </div>
+                        </div>
+                    </a>
+                }
+
+                <input type="hidden" @*name="studentId"*@ value="@Model.Fligth.Id" />
+            </form>
+        </div>
+    }
+</div>
