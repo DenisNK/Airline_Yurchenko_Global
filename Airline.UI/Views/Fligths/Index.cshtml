@@ -16,7 +16,7 @@
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin") || User.IsInRole("student"))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a class="btn btn-info" asp-action="Create">Create New</a>
     </p>
 }
 <table class="table table-bordered alert-dismissible">
@@ -41,10 +41,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.FromCountry)
             </th>
-            <!--<th>
-                To-->
-                @*@Html.DisplayNameFor(model => model.WhereCountry)*@
-            <!--</th>-->
+         
             <th>
                 @Html.DisplayNameFor(model => model.IsConfirmed)
             </th>
@@ -53,16 +50,21 @@
             </th>
 
             <th>
-                More_Information
+                Information
             </th>
-            
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+            {
+                <th>
+                    Operations
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
+            <tr class="alert-link shadow text-center">
+                <td >
                     @Html.DisplayFor(modelItem => item.Name_Fligth)
                     <h6 class="small">@Html.DisplayFor(modelItem => item.FromCity.AirportCode)@Html.DisplayFor(modelItem => item.FromCity.Id)⇾@Html.DisplayFor(modelItem => item.WhereCity.AirportCode)@Html.DisplayFor(modelItem => item.WhereCity.Id)</h6>
                     <img src="~/Content/Images/Fligth.png" width="50" height="40" alt="Fligth" />
@@ -79,9 +81,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ArrivalDate)
                 </td>
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.FromCity.Country.Name_Country)
-                    ⇾
+                    <div><img src="Content/Images/plane.png" width="55" height="50" alt="" /> </div>
                     @Html.DisplayFor(modelItem => item.WhereCity.Country.Name_Country)
                 </td>
                 <td>
@@ -96,17 +98,19 @@
                     @Html.DisplayFor(modelItem => item.Price)$
                 </td>
 
-                <td class="col-lg-auto">
-                    <a class="btn btn-info w-75 ml-3 mb-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
-
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
-                    {
-                        <a class="btn btn-info small " asp-action="Edit" asp-route-id="@item.Id">Edit </a>
-                        <a class="btn btn-danger small " asp-action="Delete" asp-route-id="@item.Id">Del</a>
-                        <a class="btn btn-warning small w-25" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
-                    }
-
+                <td class="">
+                    <a class="btn btn-info w-100" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </td>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                {
+                    <td>
+
+                        <a class="btn btn-warning small mb-1 w-100" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+                        <a class="btn btn-danger small mb-1 w-100" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-primary small w-100" asp-controller="SelectFligthTeam" asp-action="Select" asp-route-id="@item.Id">Team</a>
+
+                    </td>
+                }
 
             </tr>
 
