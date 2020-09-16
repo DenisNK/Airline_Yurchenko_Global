@@ -58,15 +58,13 @@ namespace Airline_Yurchenko.Controllers
         // GET: Fligths/Create
         public IActionResult Create()
         {
-            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode");
-            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode");
+            ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
+            ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
             return View();
         }
         
         // POST: Fligths/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+           [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
         {
