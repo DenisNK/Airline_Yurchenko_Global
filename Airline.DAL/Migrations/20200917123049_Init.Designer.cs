@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airline.DAL.Migrations
 {
     [DbContext(typeof(AirlineContext))]
-    [Migration("20200916144946_Init")]
+    [Migration("20200917123049_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,6 +279,9 @@ namespace Airline.DAL.Migrations
 
                     b.Property<int>("RequestRef")
                         .HasColumnType("int");
+
+                    b.Property<string>("SignIn")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

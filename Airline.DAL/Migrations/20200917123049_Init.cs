@@ -445,7 +445,8 @@ namespace Airline.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Message = table.Column<string>(nullable: true),
-                    RequestRef = table.Column<int>(nullable: false)
+                    RequestRef = table.Column<int>(nullable: false),
+                    SignIn = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

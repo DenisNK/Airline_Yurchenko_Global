@@ -278,6 +278,9 @@ namespace Airline.DAL.Migrations
                     b.Property<int>("RequestRef")
                         .HasColumnType("int");
 
+                    b.Property<string>("SignIn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RequestRef")

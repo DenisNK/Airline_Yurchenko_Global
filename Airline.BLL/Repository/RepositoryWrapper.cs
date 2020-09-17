@@ -15,6 +15,7 @@ namespace Airline.BLL.Repository
         private IPilotRepository _pilotRepository;
         private INavigatorRepository _navigatorRepository;
         private ITeamPersonRepository _teamPersonRepository;
+        private IFligthRepository _fligthRepository;
 
         public RepositoryWrapper(DbContext repoContext)
         {
@@ -48,6 +49,8 @@ namespace Airline.BLL.Repository
         public INavigatorRepository NavigatorRepository => _navigatorRepository ??= new NavigatorRepository(_context);
 
         public ITeamPersonRepository TeamPersonRepository => _teamPersonRepository ??= new TeamPersonRepository(_context);
+
+        public IFligthRepository FligthRepository => _fligthRepository ??= new FligthRepository(_context);
 
         public void Save()
         {

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Airline.DAL.Models;
 
 namespace Airline_Yurchenko.ViewModels
 {
-    public class RequestViewModel
+    public class GroupedRequestViewModel
     {
-        public string Sig{ get; set; }
-        public decimal Cost { get; set; }
+        public IReadOnlyList<RequestViewModel> Items { get; set; }
+        public decimal Total { get; set; }
     }
 }

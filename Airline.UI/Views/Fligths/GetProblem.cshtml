@@ -1,0 +1,31 @@
+﻿@model Airline_Yurchenko.ViewModels.GroupedRequestViewModel
+@if (!Model.Items.Any())
+{
+    <p>No data uploaded yet.</p>
+}
+else
+{
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Cost</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+        <th scope="row">Total:</th>
+        <td>@Html.DisplayFor(m => m.Total)</td>
+        <tr>
+        </tfoot>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(_ => item.Sig)</th>
+                <th scope="row">@Html.DisplayFor(_ => item.Cost)</th>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

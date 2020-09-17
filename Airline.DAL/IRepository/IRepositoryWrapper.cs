@@ -15,6 +15,7 @@ namespace Airline.DAL.IRepository
         IPilotRepository PilotRepository{ get; }
         INavigatorRepository NavigatorRepository{ get; }
         ITeamPersonRepository TeamPersonRepository { get; }
+        IFligthRepository FligthRepository{ get; }
         void Save();
 
     }

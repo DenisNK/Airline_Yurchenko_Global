@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using static Airline.DAL.Initializator.Constants;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+
 namespace Airline_Yurchenko
 {
     public partial class Startup
@@ -66,6 +68,21 @@ namespace Airline_Yurchenko
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);     
             
             services.AddGroupService();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,6 +116,18 @@ namespace Airline_Yurchenko
                 endpoints.MapControllerRoute(
                     name: DEFAULT,
                     pattern: DEFAULT_PATH);
+            });
+
+
+            app.UseCors("CorsPolicy");
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");                }
             });
         }
     }
