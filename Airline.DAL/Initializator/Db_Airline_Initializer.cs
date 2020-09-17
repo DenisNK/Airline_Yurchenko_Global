@@ -22,6 +22,21 @@ namespace Airline.DAL.Initializator
                 context.SaveChanges();
             }
 
+            //if (!context.Requests.Any())
+            ////{
+            ////    context.Requests.AddRange(
+            ////        new Request() {Message = "Message1"},
+            ////        new Request {Message = "Message2"},
+            ////        new Request {Message = "Message3"},
+            ////        new Request {Message = "Message4"},
+            ////        new Request {Message = "Message5"},
+            ////        new Request {Message = "Message6"});
+                                                       
+
+            //    context.SaveChanges();
+            //}
+
+
             if (!context.Countries.Any())
             {
                 context.Countries.AddRange(
@@ -96,12 +111,12 @@ namespace Airline.DAL.Initializator
             if (!context.Fligths.Any())
             {
                 context.Fligths.AddRange(
-                    new Fligth { Name_Fligth = "Flight_1", Price = 220.23m, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(1), DepartureDate = DateTime.UtcNow.AddDays(1), FromCityId = 1, WhereCityId = 2 },
-                new Fligth { Name_Fligth = "Fligth_2", Price = 200, IsConfirmed = false, ArrivalDate = DateTime.UtcNow.AddDays(2), DepartureDate = DateTime.UtcNow.AddDays(1), FromCityId = 3, WhereCityId = 4 },
-                new Fligth { Name_Fligth = "Fligth_3", Price = 350, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(3), DepartureDate = DateTime.UtcNow.AddDays(2), FromCityId = 5, WhereCityId = 6 },
-                new Fligth { Name_Fligth = "Fligth_4", Price = 300, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(7), DepartureDate = DateTime.UtcNow.AddDays(7), FromCityId = 8, WhereCityId = 9 },
-                new Fligth { Name_Fligth = "Fligth_5", Price = 245, IsConfirmed = false, ArrivalDate = DateTime.UtcNow.AddDays(4), DepartureDate = DateTime.UtcNow.AddDays(4), FromCityId = 2, WhereCityId = 8 },
-                new Fligth { Name_Fligth = "Fligth_6", Price = 400, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(2), DepartureDate = DateTime.UtcNow.AddDays(2), FromCityId = 1, WhereCityId = 6 });
+                    new Fligth { Name_Fligth = "Flight_1", Price = 220.23m, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(1), DepartureDate = DateTime.UtcNow.AddDays(1), FromCityId = 1, WhereCityId = 2 , Request = new Request{Message = "dss"}},
+                new Fligth { Name_Fligth = "Fligth_2", Price = 200, IsConfirmed = false, ArrivalDate = DateTime.UtcNow.AddDays(2), DepartureDate = DateTime.UtcNow.AddDays(1), FromCityId = 3, WhereCityId = 4, Request = new Request { Message = "dss" } },
+                new Fligth { Name_Fligth = "Fligth_3", Price = 350, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(3), DepartureDate = DateTime.UtcNow.AddDays(2), FromCityId = 5, WhereCityId = 6, Request = new Request { Message = "dss" } },
+                new Fligth { Name_Fligth = "Fligth_4", Price = 300, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(7), DepartureDate = DateTime.UtcNow.AddDays(7), FromCityId = 8, WhereCityId = 9, Request = new Request { Message = "dss" } },
+                new Fligth { Name_Fligth = "Fligth_5", Price = 245, IsConfirmed = false, ArrivalDate = DateTime.UtcNow.AddDays(4), DepartureDate = DateTime.UtcNow.AddDays(4), FromCityId = 2, WhereCityId = 8, Request = new Request { Message = "dss" } },
+                new Fligth { Name_Fligth = "Fligth_6", Price = 400, IsConfirmed = true, ArrivalDate = DateTime.UtcNow.AddDays(2), DepartureDate = DateTime.UtcNow.AddDays(2), FromCityId = 1, WhereCityId = 6, Request = new Request { Message = "dss" } });
 
                 context.SaveChanges();
             }

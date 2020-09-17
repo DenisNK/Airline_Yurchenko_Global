@@ -265,6 +265,27 @@ namespace Airline.DAL.Migrations
                     b.ToTable("Radio_Operators");
                 });
 
+            modelBuilder.Entity("Airline.DAL.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestRef")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestRef")
+                        .IsUnique();
+
+                    b.ToTable("Requests");
+                });
+
             modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>
                 {
                     b.Property<int>("Id")
@@ -639,6 +660,15 @@ namespace Airline.DAL.Migrations
                     b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
                         .WithMany("Radio_Operators")
                         .HasForeignKey("Team_PersonId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Request", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Fligth", "Fligth")
+                        .WithOne("Request")
+                        .HasForeignKey("Airline.DAL.Models.Request", "RequestRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>

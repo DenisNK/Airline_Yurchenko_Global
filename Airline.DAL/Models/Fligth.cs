@@ -32,6 +32,8 @@ namespace Airline.DAL.Models
         [Range(18, 7500)]
         public decimal Price { get; set; }
 
+        public Request Request { get; set; }
+        
         public virtual ICollection<FligthTeam> FligthTeams { get; set; }
     }
 }

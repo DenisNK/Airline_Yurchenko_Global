@@ -20,6 +20,7 @@ namespace Airline.DAL.Airline_Db_Context
         public DbSet<Student> Students { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
         public DbSet<StudDisc> StudDiscs { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options)
             : base(options) { }
@@ -38,6 +39,7 @@ namespace Airline.DAL.Airline_Db_Context
             modelBuilder.ApplyConfiguration(new StudentConfigurations());
             modelBuilder.ApplyConfiguration(new StudDiscConfigurations());
             modelBuilder.ApplyConfiguration(new DisciplinesConfigurations());
+            modelBuilder.ApplyConfiguration(new RequestConfigurations());
 
             base.OnModelCreating(modelBuilder);
         }

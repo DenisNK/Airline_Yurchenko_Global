@@ -5,18 +5,18 @@ using static Airline.DAL.Initializator.Constants;
 
 namespace Airline_Yurchenko.Areas.AccountFilters
 {
-    public class ForAdminStudent : IAuthorizationFilter
+    public class ForAdminDispatcher : IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (context.HttpContext.User.IsInRole(STUDENT)|| context.HttpContext.User.IsInRole(ADMIN)) return;
+            if (context.HttpContext.User.IsInRole(DISPATCHER) || context.HttpContext.User.IsInRole(ADMIN)) return;
             context.Result = new ForbidResult();
         }
     }
-    public class ForAdminStudentAttribute : Attribute, IFilterFactory
+    public class ForAdminDispatcherAttribute : Attribute, IFilterFactory
     {
         public IFilterMetadata CreateInstance(IServiceProvider serviceProvider) =>
-            new ForAdminStudent();
+            new ForAdminDispatcher();
 
         public bool IsReusable => false;
     }

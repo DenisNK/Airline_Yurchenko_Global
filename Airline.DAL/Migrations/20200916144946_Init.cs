@@ -438,6 +438,26 @@ namespace Airline.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Requests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(nullable: true),
+                    RequestRef = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Requests_Fligths_RequestRef",
+                        column: x => x.RequestRef,
+                        principalTable: "Fligths",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -528,6 +548,12 @@ namespace Airline.DAL.Migrations
                 column: "Team_PersonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Requests_RequestRef",
+                table: "Requests",
+                column: "RequestRef",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stewardess_Team_PersonId",
                 table: "Stewardess",
                 column: "Team_PersonId");
@@ -566,6 +592,9 @@ namespace Airline.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Radio_Operators");
+
+            migrationBuilder.DropTable(
+                name: "Requests");
 
             migrationBuilder.DropTable(
                 name: "Stewardess");

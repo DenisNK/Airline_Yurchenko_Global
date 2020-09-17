@@ -45,6 +45,12 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            
+            <div class="form-group" >
+                <label asp-for="Request" class="control-label"></label>
+                <input asp-for="Request.Message" class="form-control" />
+                <span asp-validation-for="Request" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

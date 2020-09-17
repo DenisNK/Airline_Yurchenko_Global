@@ -6,12 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 using Airline_Yurchenko.Areas.AccountFilters;
+using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Airline_Yurchenko.Controllers
 {
-    [Authorize(Roles = "admin")]
-
     public class FligthsController : Controller
     {
         private readonly AirlineContext _context;
@@ -23,8 +22,7 @@ namespace Airline_Yurchenko.Controllers
 
         // GET: Fligths
        
-          //[Authorize(Roles = "admin")]
-             [AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var airlineContext =  _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity).Include(r=>r.FromCity.Country).Include(t=>t.WhereCity.Country);
@@ -34,8 +32,7 @@ namespace Airline_Yurchenko.Controllers
 
         // GET: Fligths/Details/5
        
-     //   [Authorize(Roles = "student")]
-     [AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,7 +42,7 @@ namespace Airline_Yurchenko.Controllers
 
             var fligth = await _context.Fligths
                 .Include(f => f.FromCity)
-                .Include(f => f.WhereCity)
+                .Include(f => f.WhereCity).Include(req=>req.Request)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (fligth == null)
             {
@@ -54,9 +51,9 @@ namespace Airline_Yurchenko.Controllers
 
             return View(fligth);
         }
-          [ForAdmin]
+        [ForAdminDispatcher]
         // GET: Fligths/Create
-        public IActionResult Create()
+        public IActionResult Create(/*RequestViewModel request*/)
         {
             ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
@@ -64,13 +61,20 @@ namespace Airline_Yurchenko.Controllers
         }
         
         // POST: Fligths/Create
-           [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
+        public async Task<IActionResult> Create(Fligth fligth)
         {
+            //if (User.IsInRole("dispatcher"))
+            //{
+            //}
+
             if (ModelState.IsValid)
             {
+                fligth.Request = new Request {Message = fligth.Request.Message};
+                
                 _context.Add(fligth);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -79,6 +83,7 @@ namespace Airline_Yurchenko.Controllers
             return View(fligth);
         }
 
+        [ForAdmin]
         // GET: Fligths/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -98,8 +103,7 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // POST: Fligths/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
@@ -133,7 +137,7 @@ namespace Airline_Yurchenko.Controllers
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.WhereCityId);
             return View(fligth);
         }
-
+        [ForAdmin]
         // GET: Fligths/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

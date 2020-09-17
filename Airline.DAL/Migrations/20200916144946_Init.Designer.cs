@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airline.DAL.Migrations
 {
     [DbContext(typeof(AirlineContext))]
-    [Migration("20200914083327_Init")]
+    [Migration("20200916144946_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,6 +265,27 @@ namespace Airline.DAL.Migrations
                     b.HasIndex("Team_PersonId");
 
                     b.ToTable("Radio_Operators");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestRef")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestRef")
+                        .IsUnique();
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>
@@ -641,6 +662,15 @@ namespace Airline.DAL.Migrations
                     b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
                         .WithMany("Radio_Operators")
                         .HasForeignKey("Team_PersonId");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.Request", b =>
+                {
+                    b.HasOne("Airline.DAL.Models.Fligth", "Fligth")
+                        .WithOne("Request")
+                        .HasForeignKey("Airline.DAL.Models.Request", "RequestRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Airline.DAL.Models.Stewardess", b =>
