@@ -25,8 +25,22 @@ namespace Airline_Yurchenko.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var airlineContext =  _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity).Include(r=>r.FromCity.Country).Include(t=>t.WhereCity.Country);
-            return View(await airlineContext.ToListAsync());
+            //bool isUser = IsUser();
+            if (IsUser())
+            {
+                var airlineContext = _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity)
+                    .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country)
+                    .Where(confirm => confirm.IsConfirmed);
+                return View(await airlineContext.ToListAsync());
+            }
+
+            else
+            {
+                var airlineContext = _context.Fligths.Include(f => f.FromCity).Include(f => f.WhereCity)
+                    .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country);
+                return View(await airlineContext.ToListAsync());
+            }
+            
 
         }
 
@@ -80,6 +94,7 @@ namespace Airline_Yurchenko.Controllers
             }
             ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.FromCityId);
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "AirportCode", fligth.WhereCityId);
+
             return View(fligth);
         }
 
@@ -172,6 +187,14 @@ namespace Airline_Yurchenko.Controllers
         private bool FligthExists(int id)
         {
             return _context.Fligths.Any(e => e.Id == id);
+        }
+        /// <summary>
+        /// Represents is it user or not
+        /// </summary>
+        /// <returns></returns>
+        private bool IsUser()
+        {
+            return !(User.IsInRole("admin") || User.IsInRole("dispatcher"));
         }
     }
 }
