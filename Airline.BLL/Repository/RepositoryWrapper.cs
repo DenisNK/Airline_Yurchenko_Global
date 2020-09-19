@@ -1,6 +1,7 @@
 ﻿using Airline.BLL.Repository.EntityRepository;
 using Airline.DAL.IRepository;
 using Airline.DAL.IRepository.IEntityRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.BLL.Repository
@@ -8,6 +9,7 @@ namespace Airline.BLL.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly DbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
         private IStudentRepository _studentRepository;
         private IDisciplinesRepository _disciplinesRepository;
         private IStudDiscRepository _studDiscRepository;
@@ -16,10 +18,12 @@ namespace Airline.BLL.Repository
         private INavigatorRepository _navigatorRepository;
         private ITeamPersonRepository _teamPersonRepository;
         private IFligthRepository _fligthRepository;
+        private IRequsetRepository _requsetRepository;
 
-        public RepositoryWrapper(DbContext repoContext)
+        public RepositoryWrapper(DbContext repoContext, UserManager<IdentityUser> userManager)
         {
             _context = repoContext;
+            _userManager = userManager;
         }
 
         public IStudentRepository StudentRepo
@@ -51,6 +55,8 @@ namespace Airline.BLL.Repository
         public ITeamPersonRepository TeamPersonRepository => _teamPersonRepository ??= new TeamPersonRepository(_context);
 
         public IFligthRepository FligthRepository => _fligthRepository ??= new FligthRepository(_context);
+
+        public IRequsetRepository RequsetRepository => _requsetRepository ??= new RequsetRepository(_context);
 
         public void Save()
         {

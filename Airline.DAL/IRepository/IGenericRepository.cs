@@ -16,6 +16,5 @@ namespace Airline.DAL.IRepository
         IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties);
 
         //  void Save();
-
     }
 }

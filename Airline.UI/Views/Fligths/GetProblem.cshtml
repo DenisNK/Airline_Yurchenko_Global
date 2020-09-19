@@ -1,31 +1,41 @@
-﻿@model Airline_Yurchenko.ViewModels.GroupedRequestViewModel
+﻿@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Identity
+@model Airline_Yurchenko.ViewModels.GroupedRequestViewModel
 @if (!Model.Items.Any())
 {
     <p>No data uploaded yet.</p>
 }
 else
 {
-    <table>
+    <table class="table table-bordered ">
         <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Cost</th>
-        </tr>
+            <tr class="group-header">
+                <th scope="col">Name</th>
+                <th scope="col">Count requests</th>
+            </tr>
         </thead>
-        <tfoot>
-        <tr>
-        <th scope="row">Total:</th>
-        <td>@Html.DisplayFor(m => m.Total)</td>
-        <tr>
+        <tfoot class="table table-info">
+            <tr>
+                <th scope="row">Total:</th>
+                <th>@Html.DisplayFor(m => m.Total)</th>
+            <tr>
         </tfoot>
         <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <th scope="row">@Html.DisplayFor(_ => item.Sig)</th>
-                <th scope="row">@Html.DisplayFor(_ => item.Cost)</th>
-            </tr>
-        }
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Fligths" asp-action="GetListProblem" asp-route-id="@item.Sig">@item.Sig </a>
+                    </td>
+                    <th scope="row">@Html.DisplayFor(_ => item.Cost)</th>
+                </tr>
+            }
         </tbody>
     </table>
 }
+<script>
+    $(function () {
+        $('.group-header').click(function () {
+            $(this).nextUntil('.group-header').toggle();
+        });
+    });</script>

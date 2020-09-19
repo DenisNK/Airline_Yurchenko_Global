@@ -8,8 +8,9 @@ namespace Airline.DAL.IRepository.IEntityRepository
 {
     public interface IFligthRepository:IGenericRepository<Fligth>
     {
-        IQueryable<Fligth> GetFligthAdminDisp();
+        IQueryable<Fligth> GetFligthAdminDisp(string name);
         IQueryable<Fligth> GetFligthAllUsers();
+        IQueryable<Fligth> GetFligthAdmin();
 
     }
 }

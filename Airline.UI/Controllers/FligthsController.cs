@@ -19,48 +19,58 @@ namespace Airline_Yurchenko.Controllers
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public FligthsController(AirlineContext context, IRepositoryWrapper repositoryWrapper, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        RoleManager<IdentityRole> _roleManager;
+        public FligthsController(AirlineContext context, IRepositoryWrapper repositoryWrapper, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _repositoryWrapper = repositoryWrapper;
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
-
-        public async Task<IActionResult> GetProblem()
+        [HttpGet]
+        public IActionResult GetProblem()
         {
             var source = _context.Requests.ToList();
+
             var airlineContext = _context.Requests
                 .GroupBy(u => u.SignIn, (key, items) => new RequestViewModel
-                {   
+                {
                     Sig = key,
-                    Cost = items.Sum(u => u.RequestRef)
+                    Cost = items.Count(),
                 })
                 .ToList();
 
             var model = new GroupedRequestViewModel
             {
                 Items = airlineContext,
-                Total = source.Sum(u => u.RequestRef)
+                Total = source.Count
             };
-            
-                             
+
             return View(model);
-            //return View( grouped.ToList());
         }
 
+        public async Task<IActionResult> GetListProblem(string id)
+        {
+            var source = _repositoryWrapper.RequsetRepository.GetListProblem(id);
+            return View(await source.ToListAsync());
+        }
         // GET: Fligths
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return IsUser() 
-                ? View(await _repositoryWrapper.FligthRepository.GetFligthAllUsers().ToListAsync()) 
-                : View(await _repositoryWrapper.FligthRepository.GetFligthAdminDisp().ToListAsync());
+            if (IsUser())
+                return View(await _repositoryWrapper.FligthRepository.GetFligthAllUsers().ToListAsync());
+            return User.IsInRole("admin")
+                ? View(await _repositoryWrapper.FligthRepository.GetFligthAdmin()
+                    .ToListAsync())
+                : View(await _repositoryWrapper.FligthRepository.GetFligthAdminDisp(User.Identity.Name)
+                    .ToListAsync());
         }
 
         // GET: Fligths/Details/5
-       
+
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
@@ -71,7 +81,7 @@ namespace Airline_Yurchenko.Controllers
 
             var fligth = await _context.Fligths
                 .Include(f => f.FromCity)
-                .Include(f => f.WhereCity).Include(req=>req.Request)
+                .Include(f => f.WhereCity).Include(req => req.Request)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (fligth == null)
             {
@@ -89,22 +99,22 @@ namespace Airline_Yurchenko.Controllers
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
             return View();
         }
-        
+
         // POST: Fligths/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Fligth fligth)
+        public async Task<IActionResult> Create(Fligth fligth, int id)
         {
             if (User.IsInRole("dispatcher"))
             {
-             
+
             }
 
             if (ModelState.IsValid)
             {
-                fligth.Request = new Request {Message = fligth.Request.Message, SignIn = User.Identity.Name};
-            _context.Add(fligth);
-                
+                if (fligth.Request.Message != "")
+                    fligth.Request = new Request { Message = fligth.Request.Message, SignIn = User.Identity.Name };
+                _context.Add(fligth);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -134,7 +144,7 @@ namespace Airline_Yurchenko.Controllers
         }
 
         // POST: Fligths/Edit/5
-     
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name_Fligth,FromCityId,WhereCityId,DepartureDate,ArrivalDate,IsConfirmed,Price,Id")] Fligth fligth)
@@ -149,6 +159,8 @@ namespace Airline_Yurchenko.Controllers
                 try
                 {
                     _context.Update(fligth);
+                    var request = await _context.Requests.FindAsync(id);
+                    _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

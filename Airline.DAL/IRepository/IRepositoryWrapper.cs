@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Airline.DAL.IRepository.IEntityRepository;
+﻿using Airline.DAL.IRepository.IEntityRepository;
 
 namespace Airline.DAL.IRepository
 {
@@ -16,6 +13,7 @@ namespace Airline.DAL.IRepository
         INavigatorRepository NavigatorRepository{ get; }
         ITeamPersonRepository TeamPersonRepository { get; }
         IFligthRepository FligthRepository{ get; }
+        IRequsetRepository RequsetRepository { get; }
         void Save();
 
     }

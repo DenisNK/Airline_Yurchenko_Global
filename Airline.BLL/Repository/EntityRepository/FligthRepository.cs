@@ -11,12 +11,23 @@ namespace Airline.BLL.Repository.EntityRepository
 {
     public class FligthRepository : Repository<Fligth>, IFligthRepository
     {
-        public FligthRepository(DbContext context) : base(context) { }
+        public FligthRepository(DbContext context) : base(context)
+        {
+        }
 
-        public IQueryable<Fligth> GetFligthAdminDisp()
+        public IQueryable<Fligth> GetFligthAdmin()
         {
             return _dbSet.Include(f => f.FromCity).Include(f => f.WhereCity)
-                .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country).AsNoTracking();
+                    .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country).AsNoTracking();
+        }
+
+        public IQueryable<Fligth> GetFligthAdminDisp(string name)
+        {
+            
+                return _dbSet.Include(f => f.FromCity).Include(f => f.WhereCity)
+                    .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country).Include(req => req.Request)
+                    .Where(r => r.Request.SignIn == name).AsNoTracking();
+         
         }
         public IQueryable<Fligth> GetFligthAllUsers()
         {
