@@ -1,7 +1,10 @@
+using System;
+using System.IO;
 using System.Linq;
 using Airline.BLL.Extensions;
 using Airline.DAL.Airline_Db_Context;
 using Airline_Yurchenko.FiltersApp;
+using Airline_Yurchenko.LoggerManager;
 using Airline_Yurchenko.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using static Airline.DAL.Initializator.Constants;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using NLog;
 
 namespace Airline_Yurchenko
 {
@@ -21,6 +24,7 @@ namespace Airline_Yurchenko
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -55,7 +59,9 @@ namespace Airline_Yurchenko
             });
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
-                           
+
+            services.ConfigureLoggerService();
+
             services.AddControllersWithViews(options => options.Filters.Add(new CurrentDataTimeFilter()));    // подключение по объекту
 
             services.Configure<CookiePolicyOptions>(options =>

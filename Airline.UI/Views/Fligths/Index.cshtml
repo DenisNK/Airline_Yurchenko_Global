@@ -13,14 +13,25 @@
     </h1>
 </div>
 
-@if (SignInManager.IsSignedIn(User) && User.IsInRole("admin") || User.IsInRole("student"))
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("admin") || User.IsInRole("dispatcher"))
 {
     <p>
         <a class="btn btn-info" asp-action="Create">Create New</a>
     </p>
 }
-<table class="table table-bordered alert-dismissible">
 
+<table class="table table-bordered alert-dismissible">
+    @if (Model == null || Model.Count() == 0)
+    {
+        <thead >
+        <tr>
+            <td>There are no flights. Do you want to create a new flight?</td>
+        </tr>
+        </thead>
+    }
+    else
+    {
+        
     <thead>
         <tr class="alert-info">
             <th>
@@ -115,4 +126,8 @@
             </tr>
         }
     </tbody>
+
+    }
 </table>
+
+    

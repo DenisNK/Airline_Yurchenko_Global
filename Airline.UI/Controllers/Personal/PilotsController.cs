@@ -7,17 +7,21 @@ namespace Airline_Yurchenko.Controllers.Personal
 {
     
     public class PilotsController : Controller
-    {
+    
+    {   
+        private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repositoryWrapper;
-        public PilotsController(IRepositoryWrapper repositoryWrapper)
+        public PilotsController(IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
         {
             _repositoryWrapper = repositoryWrapper;
+            _logger = logger;
         }
 
         // GET: Pilots
         public IActionResult Index()
         {
             var airlineContext = _repositoryWrapper.PilotRepository.GetAllPilot();
+            _logger.LogInfo($"Returned all owners from database.");
             return View(airlineContext);
         }
 
@@ -26,12 +30,14 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
-
+            _logger.LogInfo($"Returned owner with id: {id}");
             var pilot = await _repositoryWrapper.PilotRepository.GetPilotcByIdWithTeamAsync(id);
             if (pilot == null)
             {
+                _logger.LogError($"Pilot not found");
                 return NotFound();
             }
 
@@ -65,12 +71,13 @@ namespace Airline_Yurchenko.Controllers.Personal
             
             if (id == null)
             {
+                _logger.LogError("Pilot object sent from client is null.");
                 return NotFound();
             }
 
             var pilot = await _repositoryWrapper.PilotRepository.GetById(id);
             if (pilot == null)
-            {
+            {_logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
@@ -86,11 +93,13 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id != pilot.Id)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Invalid owner object sent from client.");
                 return View(pilot);
             }
             else
@@ -108,6 +117,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
@@ -116,9 +126,10 @@ namespace Airline_Yurchenko.Controllers.Personal
 
             if (pilot == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
-
+            _logger.LogWarn($"Pilot with id: {id}, has been choose for delete.");
             return View(pilot);
         }
 

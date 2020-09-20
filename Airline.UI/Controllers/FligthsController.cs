@@ -15,23 +15,20 @@ namespace Airline_Yurchenko.Controllers
 {
     public class FligthsController : Controller
     {
+        private readonly ILoggerManager _logger;
         private readonly AirlineContext _context;
         private readonly IRepositoryWrapper _repositoryWrapper;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        RoleManager<IdentityRole> _roleManager;
-        public FligthsController(AirlineContext context, IRepositoryWrapper repositoryWrapper, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        
+        public FligthsController(AirlineContext context, IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
         {
             _context = context;
             _repositoryWrapper = repositoryWrapper;
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _logger = logger;
         }
         [HttpGet]
         public IActionResult GetProblem()
         {
-            var source = _context.Requests.ToList();
+            var source = _repositoryWrapper.RequsetRepository.Get().ToList();
 
             var airlineContext = _context.Requests
                 .GroupBy(u => u.SignIn, (key, items) => new RequestViewModel
@@ -46,7 +43,7 @@ namespace Airline_Yurchenko.Controllers
                 Items = airlineContext,
                 Total = source.Count
             };
-
+            _logger.LogInfo($"Returned all requests from admin.");
             return View(model);
         }
 
@@ -160,7 +157,8 @@ namespace Airline_Yurchenko.Controllers
                 {
                     _context.Update(fligth);
                     var request = await _context.Requests.FindAsync(id);
-                    _context.Requests.Remove(request);
+                     if(request !=null)
+                        _context.Requests.Remove(request);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
