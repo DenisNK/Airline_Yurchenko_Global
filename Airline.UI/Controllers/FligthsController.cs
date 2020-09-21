@@ -90,7 +90,7 @@ namespace Airline_Yurchenko.Controllers
 
         [ForAdminDispatcher]
         // GET: Fligths/Create
-        public IActionResult Create(/*RequestViewModel request*/)
+        public IActionResult Create()
         {
             ViewData["FromCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
             ViewData["WhereCityId"] = new SelectList(_context.Cities, "Id", "Name_City");
