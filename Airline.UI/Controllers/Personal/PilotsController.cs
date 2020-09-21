@@ -57,6 +57,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (ModelState.IsValid)
             {
+                _logger.LogInfo($"Pilot has been created into database.");
                 await _repositoryWrapper.PilotRepository.CreateWithImage(pilot);
                 return RedirectToAction(nameof(Index));
             }
@@ -138,6 +139,7 @@ namespace Airline_Yurchenko.Controllers.Personal
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            _logger.LogInfo($"Pilot has been deleted from database.");
             await _repositoryWrapper.PilotRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }

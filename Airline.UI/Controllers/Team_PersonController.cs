@@ -14,11 +14,13 @@ namespace Airline_Yurchenko.Controllers
 {
     public class Team_PersonController : Controller
     {
+        private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public Team_PersonController(IRepositoryWrapper repositoryWrapper)
+        public Team_PersonController(IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
         {
             _repositoryWrapper = repositoryWrapper;
+            _logger = logger;
         }
         public IActionResult PersonalList()
         {
@@ -28,6 +30,7 @@ namespace Airline_Yurchenko.Controllers
         // GET: Team_Person
         public IActionResult Index()
         {
+            _logger.LogInfo($"Returned all team persons from database.");
             return View(_repositoryWrapper.TeamPersonRepository.Get());
         }
                       
@@ -36,16 +39,15 @@ namespace Airline_Yurchenko.Controllers
         {
             if (id == null)
             {
+                _logger.LogError($"Team persons with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
             var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetTeamByIdWithAllTeamAsync(id);
-        
-            if (teamPerson == null)
-            {
-                return NotFound();
-            }
-            return View(teamPerson);
+
+            if (teamPerson != null) return View(teamPerson);
+            _logger.LogError($"Team persons not found");
+            return NotFound();
         }
 
 
@@ -54,12 +56,14 @@ namespace Airline_Yurchenko.Controllers
         {
             if (id == null)
             {
+                _logger.LogError($"Team persons with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
             var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
             if (teamPerson == null)
             {
+                _logger.LogError($"Team persons not found");
                 return NotFound();
             }
 
@@ -76,12 +80,11 @@ namespace Airline_Yurchenko.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name_Team,Id")] Team_Person teamPerson)
         {
-            if (ModelState.IsValid)
-            {
-                await _repositoryWrapper.TeamPersonRepository.Create(teamPerson);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(teamPerson);
+            if (!ModelState.IsValid) 
+                return View(teamPerson);
+            _logger.LogInfo($"Team persons has been created into database.");
+            await _repositoryWrapper.TeamPersonRepository.Create(teamPerson);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Team_Person/Edit/5
@@ -89,12 +92,14 @@ namespace Airline_Yurchenko.Controllers
         {
             if (id == null)
             {
+                _logger.LogError($"Team persons id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
             var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
             if (teamPerson == null)
             {
+                _logger.LogError("Team persons object sent from client is null.");
                 return NotFound();
             }
             return View(teamPerson);
@@ -108,12 +113,13 @@ namespace Airline_Yurchenko.Controllers
         {
             if (id != teamPerson.Id)
             {
+                _logger.LogError("Team persons object sent from client is null.");
                 return NotFound();
             }
 
             if (!ModelState.IsValid) 
                 return View(teamPerson);
-
+            _logger.LogInfo("Team persons has been updated.");
             await _repositoryWrapper.TeamPersonRepository.Update(id, teamPerson);
             return RedirectToAction(nameof(Index));
         }
@@ -123,12 +129,14 @@ namespace Airline_Yurchenko.Controllers
         {
             if (id == null)
             {
+                _logger.LogError($"Team persons with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
-
+            _logger.LogWarn($"Team persons with id: {id}, has been choose for delete.");
             var teamPerson = await _repositoryWrapper.TeamPersonRepository.GetById(id);
             if (teamPerson == null)
             {
+                _logger.LogError("Invalid owner object sent from client.");
                 return NotFound();
             }
 

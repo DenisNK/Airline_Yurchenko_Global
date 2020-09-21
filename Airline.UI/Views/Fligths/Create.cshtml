@@ -37,32 +37,45 @@
                 <input asp-for="ArrivalDate" class="form-control" />
                 <span asp-validation-for="ArrivalDate" class="text-danger"></span>
             </div>
-        @if (!SignInManager.IsSignedIn(User) && User.IsInRole("dispatcher"))
-        {
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsConfirmed"/> @Html.DisplayNameFor(model => model.IsConfirmed)
-                </label>
-            </div>
-        }
+
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            @if (!SignInManager.IsSignedIn(User) && User.IsInRole("dispatcher"))
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsConfirmed" /> @Html.DisplayNameFor(model => model.IsConfirmed)
+                    </label>
+                </div>
+            }
+            <div id="AddRequest" class="form-group">
                 <label asp-for="Request" class="control-label"></label>
                 <textarea asp-for="Request.Message" class="form-control" placeholder="Write something here"></textarea>
                 <span asp-validation-for="Request" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<button id="expandHeader" class="btn btn-primary" onclick="$('#AddRequest').fadeIn();">Add request</button>
+<button id="collapseHeader" class="btn btn-primary" onclick="$('#AddRequest').fadeOut();">Remove request</button>
+<hr/>
 <div>
     <a class="btn btn-info" asp-action="Index">Back to List</a>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.group-header').click(function () {
+            $(this).nextUntil('.group-header').toggle();
+        });
+    });
+</script>
+
