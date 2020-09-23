@@ -14,6 +14,7 @@ namespace Airline.DAL.IRepository
         ITeamPersonRepository TeamPersonRepository { get; }
         IFligthRepository FligthRepository{ get; }
         IRequsetRepository RequsetRepository { get; }
+        IStewardessesRepository StewardessesRepository{ get; }
         void Save();
 
     }

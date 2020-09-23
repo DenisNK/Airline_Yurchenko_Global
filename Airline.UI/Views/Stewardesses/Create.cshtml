@@ -10,7 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form enctype="multipart/form-data" asp-action="Create">
+            @*using for multimedia*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -39,8 +40,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Team_PersonId" class="control-label"></label>
-                <select asp-for="Team_PersonId" class ="form-control" asp-items="ViewBag.Team_PersonId"></select>
+                <select asp-for="Team_PersonId" class="form-control" asp-items="ViewBag.Team_PersonId"></select>
             </div>
+
+            <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -52,3 +64,8 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
+@section Scripts
+{
+    <script src="~/js/Custom-file-input-script.js" type="text/javascript"></script>
+}

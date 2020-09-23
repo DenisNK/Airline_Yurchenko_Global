@@ -331,6 +331,7 @@ namespace Airline.DAL.Migrations
                     Age = table.Column<int>(maxLength: 30, nullable: false),
                     Experience = table.Column<int>(nullable: false),
                     Salary = table.Column<int>(nullable: false),
+                    ProfilePicture = table.Column<string>(nullable: true),
                     Team_PersonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

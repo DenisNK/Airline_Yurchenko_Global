@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Airline.DAL.Models.Stewardess>
+﻿@model IEnumerable<Airline.DAL.Models.Pilot>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,40 +12,28 @@
 <table class="table">
     <thead>
         <tr>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Name)">
-                    @Html.DisplayNameFor(model => model.Name)
-                </a>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Surname)">
-                    @Html.DisplayNameFor(model => model.Surname)
-                </a>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
             </th>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Age)">
-                    @Html.DisplayNameFor(model => model.Age)
-                </a>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
             </th>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Experience)">
-                    @Html.DisplayNameFor(model => model.Experience)
-                </a>
+            <th>
+                @Html.DisplayNameFor(model => model.Experience)
             </th>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Salary)">
-                    @Html.DisplayNameFor(model => model.Salary)
-                </a>
-            <th name="sort">
-                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(model => model.Team_PersonId)">
-                    @Html.DisplayNameFor(model => model.Team_Person)</a>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Team_Person)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProfilePicture)
             </th>
-            <th>
-
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -69,6 +57,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Team_Person.Name_Team)
             </td>
+
             <td>
                 <img src="~/images/@item.ProfilePicture" class="rounded-circle" height="60" width="60" asp-append-version="true" alt="Image_Pilot"/>
             </td>

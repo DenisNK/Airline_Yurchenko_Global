@@ -1,14 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Airline.DAL.IRepository;
 using Airline.DAL.Models;
+using Airline_Yurchenko.Helpers.Pagination;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
-    
+
     public class PilotsController : Controller
-    
-    {   
+
+    {
         private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repositoryWrapper;
         public PilotsController(IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
@@ -17,13 +20,63 @@ namespace Airline_Yurchenko.Controllers.Personal
             _logger = logger;
         }
 
-        // GET: Pilots
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? company, string name, SortState sortOrder = SortState.NameAsc, int page = 1)
         {
-            var airlineContext = _repositoryWrapper.PilotRepository.GetAllPilot();
-            _logger.LogInfo($"Returned all owners from database.");
-            return View(airlineContext);
+            const int pageSize = 3;
+
+            //фильтрация
+            var users = _repositoryWrapper.PilotRepository.GetAllPilot();
+            //IQueryable<User> users = db.Users.Include(x => x.Company);
+
+            if (company != null && company != 0)
+            {
+                users = users.Where(p => p.Team_PersonId == company);
+            }
+            if (!String.IsNullOrEmpty(name))
+            {
+                users = users.Where(p => p.Name.Contains(name));
+            }
+
+            // сортировка
+            users = Queryable(sortOrder, users);
+           
+            // пагинация
+            var count = users.Count();
+            var items = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // формируем модель представления
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+            FilterViewModel = new FilterViewModel(_repositoryWrapper.TeamPersonRepository.Get().ToList(), company, name),
+                Users = items
+            };
+            return View(viewModel);
         }
+     
+        private static IQueryable<Pilot> Queryable(SortState sortOrder, IQueryable<Pilot> users)
+        {
+            users = sortOrder switch
+            {
+                SortState.NameDesc => users.OrderByDescending(s => s.Name),
+                SortState.AgeAsc => users.OrderBy(s => s.Age),
+                SortState.AgeDesc => users.OrderByDescending(s => s.Age),
+                SortState.CompanyAsc => users.OrderBy(s => s.Team_Person.Name_Team), ////????
+                SortState.CompanyDesc => users.OrderByDescending(s => s.Team_Person.Name_Team) ////??????
+                ,
+                _ => users.OrderBy(s => s.Name)
+            };
+
+            return users;
+        }
+        // GET: Pilots
+        //public IActionResult Index()
+        //{
+        //    var airlineContext = _repositoryWrapper.PilotRepository.GetAllPilot();
+        //    _logger.LogInfo($"Returned all owners from database.");
+        //    return View(airlineContext);
+        //}
 
         // GET: Pilots/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -55,21 +108,21 @@ namespace Airline_Yurchenko.Controllers.Personal
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Pilot pilot)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _logger.LogInfo($"Pilot has been created into database.");
-                await _repositoryWrapper.PilotRepository.CreateWithImage(pilot);
-                return RedirectToAction(nameof(Index));
+                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
+                return View(pilot);
             }
 
-            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
-            return View(pilot);
+            _logger.LogInfo($"Pilot has been created into database.");
+            await _repositoryWrapper.PilotRepository.CreateWithImage(pilot);
+            return RedirectToAction(nameof(Index));
         }
-        
+
         // GET: Pilots/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            
+
             if (id == null)
             {
                 _logger.LogError("Pilot object sent from client is null.");
@@ -78,7 +131,8 @@ namespace Airline_Yurchenko.Controllers.Personal
 
             var pilot = await _repositoryWrapper.PilotRepository.GetById(id);
             if (pilot == null)
-            {_logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
+            {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
@@ -87,10 +141,10 @@ namespace Airline_Yurchenko.Controllers.Personal
         }
 
         // POST: Pilots/Edit/5
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  Pilot pilot)
+        public async Task<IActionResult> Edit(int id, Pilot pilot)
         {
             if (id != pilot.Id)
             {
@@ -105,8 +159,7 @@ namespace Airline_Yurchenko.Controllers.Personal
             }
             else
             {
-                ViewData["Team_PersonId"] =
-                    _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
+                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
                 await _repositoryWrapper.PilotRepository.GetByIdWithImage(id, pilot);
                 return RedirectToAction(nameof(Index));
             }

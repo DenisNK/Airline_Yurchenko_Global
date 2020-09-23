@@ -1,30 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
-
+using Airline_Yurchenko.ViewModels;
+using Airline.DAL.IRepository;
+using Airline_Yurchenko.SortExtentions;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
     public class NavigatorsController : Controller
     {
         private readonly AirlineContext _context;
+        private readonly IRepositoryWrapper _repositoryWrapper;
         
-        public NavigatorsController(AirlineContext context)
+        public NavigatorsController(AirlineContext context, IRepositoryWrapper repositoryWrapper)
         {
             _context = context;
+            _repositoryWrapper = repositoryWrapper;
         }
-
+       
         // GET: Navigators
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sort)
         {
-            var airlineContext = _context.Navigators.Include(n => n.Team_Person);
-            return View(await airlineContext.ToListAsync());
+            var users = _repositoryWrapper.NavigatorRepository.GetAllNavigator();
+            sort ??= "Name";
+
+            users = (IQueryable<Navigator>) users.SortDynamic(sort);
+
+            return View(await users.ToListAsync());
+            //return View(users.OrderByViaExpressions(sort).ToList());
         }
 
         // GET: Navigators/Details/5

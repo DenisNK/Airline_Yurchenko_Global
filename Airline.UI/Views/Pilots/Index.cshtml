@@ -1,72 +1,175 @@
-﻿@model IEnumerable<Airline.DAL.Models.Pilot>
-
+﻿@model Airline_Yurchenko.Helpers.Pagination.IndexViewModel
+@addTagHelper *, Airline_Yurchenko
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
+<h1>Список пользователей</h1>
+<form method="get">
+    <div class="form-group form-inline">
+        <label>Имя: </label>
+        <input name="name" value="@Model.FilterViewModel.SelectedName" class="form-control" />
 
-<h1>Index</h1>
+        <label>Компания: </label>
+        <select name="company" asp-items="Model.FilterViewModel.Companies" class="form-control"></select>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+        <input type="submit" value="Фильтр" class="btn btn-outline-dark" />
+    </div>
+</form>
+
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Experience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Team_Person)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfilePicture)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Experience)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Team_Person.Name_Team)
-            </td>
-
-            <td>
-                <img src="~/images/@item.ProfilePicture" class="rounded-circle" height="60" width="60" asp-append-version="true" alt="Image_Pilot"/>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+    <tr>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
+            @Html.DisplayNameFor(it=>it.Users.GetEnumerator().Current.Name)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AgeSort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
+                @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Age)
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CompanySort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">@Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Team_Person)</a>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.GetEnumerator().Current.ProfilePicture)
+        </th>
+    </tr>
+    @foreach (var u in Model.Users)
+    {
+<tr>
+    <td>@u.Name</td>
+    <td>@u.Age</td>
+    <td>@u.Team_Person.Name_Team</td>    @*??????*@
+    
+    <td>
+        <img src="~/images/@u.ProfilePicture" class="rounded-circle" height="60" width="60" asp-append-version="true" alt="Image_Pilot"/>
+    </td>
+</tr> 
+    }
 </table>
+
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-name="@(Model.FilterViewModel.SelectedName)"
+           page-url-company="@(Model.FilterViewModel.SelectedCompany)"
+           page-url-sortorder="@(Model.SortViewModel.Current)">
+
+</page-link>
+
+@*@using Airline.DAL.Models
+    @model Airline_Yurchenko.Helpers.Pagination.IndexViewModel
+
+    @{
+        ViewData["Title"] = "Home Page";
+    }
+    <style>
+        @@font-face {
+            font-family: 'FontAwesome';
+            src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal
+        }
+
+        .glyphicon {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+        }
+
+        .glyphicon-chevron-right:before {
+            content: "\f054";
+        }
+
+        .glyphicon-chevron-left:before {
+            content: "\f053";
+        }
+    </style>
+    <h1>Список пользователей</h1>
+    <form method="get">
+        <div class="form-inline">
+            <label>Имя: </label>
+            <input name="name" value="@Model.FilterViewModel.SelectedName" class="form-control" />
+
+            <label>Компания: </label>
+            <select name="company" asp-items="Model.FilterViewModel.Companies" class="form-control"></select>
+
+            <input type="submit" value="Фильтр" class="btn btn-outline-dark" />
+        </div>
+    </form>
+
+    <table class="table">
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
+                   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+                   asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Имя</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AgeSort)"
+                   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+                   asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Возраст</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CompanySort)"
+                   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+                   asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Компания</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CompanySort)"
+                   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+                   asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Компания</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CompanySort)"
+                   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+                   asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Компания</a>
+            </th>
+        </tr>
+        @foreach (Pilot u in Model.Users)
+        {
+    <tr>
+        <td>@u.Name</td>
+        <td>@u.Age</td>
+        <td>@u.Team_Person.Name_Team</td>
+        <td>@u.Experience</td>
+        <td>@u.Salary</td>
+
+
+    </tr>
+        }
+    </table>
+
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-name="@(Model.FilterViewModel.SelectedName)"
+       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn  btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-name="@(Model.FilterViewModel.SelectedName)"
+       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+    }*@

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -30,6 +31,14 @@ namespace Airline.BLL.Repository.EntityRepository
         public Task<Navigator> MyDiscUnique(Expression<Func<Navigator, bool>> predicate)
         {
             return _context.Set<Navigator>().FirstOrDefaultAsync(predicate);
+        }
+
+        public IQueryable<Navigator> GetAllNavigator()
+        {
+            return _dbSet
+                .Include(o => o.Team_Person)
+                .AsNoTracking();
+
         }
     }
 }

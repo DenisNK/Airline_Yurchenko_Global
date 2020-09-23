@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Airline.DAL.IRepository;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline.DAL.Models
 {
-    public class Stewardess : BaseId
+    public class Stewardess : BaseId, IEntity
     {
         [Required(ErrorMessage = "Please, input your name")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Name should not be longer than 20 characters.")]
@@ -23,6 +25,12 @@ namespace Airline.DAL.Models
         [Required(ErrorMessage = "Please, input the salary ($)")]
         [Range(100, 5000)]
         public int Salary { get; set; }
+
+        [FileExtensions(Extensions = "jpg,png,gif,jpeg,bmp,svg")]
+        public string ProfilePicture { get; set; }
+
+        [Display(Name = "Profile Picture")]
+        public IFormFile ProfileImage { get; set; }
 
         // [Required(ErrorMessage = "Please, input the Price")]
         public int? Team_PersonId { get; set; }

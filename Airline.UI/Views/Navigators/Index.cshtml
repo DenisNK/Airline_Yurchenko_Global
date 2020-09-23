@@ -1,65 +1,36 @@
 ﻿@model IEnumerable<Airline.DAL.Models.Navigator>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Список пользователей</h1>
+<form method="post">
 <table class="table">
-    <thead>
+    <tr>
+        <th name ="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Name)">
+                @Html.DisplayNameFor(e=>e.Name)
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Age)">
+                @Html.DisplayNameFor(e => e.Age)
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Team_PersonId)">
+                @Html.DisplayNameFor(e => e.Team_Person)
+            </a>
+        </th>
+    </tr>
+    @foreach (var u in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Experience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Team_Person)
-            </th>
-            <th></th>
+            <td>@Html.DisplayFor(item => @u.Name)</td>
+            <td>@Html.DisplayFor(item => @u.Age)</td>
+            <td>@Html.DisplayFor(item => @u.Team_Person.Name_Team)</td>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Experience)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Team_Person.Name_Team)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+    }
 </table>
+</form>
+
