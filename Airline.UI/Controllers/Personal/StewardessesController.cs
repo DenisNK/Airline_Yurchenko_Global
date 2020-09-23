@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.IRepository;
 using Airline.DAL.Models;
+using Airline_Yurchenko.SortExtentions;
+using Airline_Yurchenko.ViewModels;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
     public class StewardessesController : Controller
     {
-        private readonly AirlineContext _context;
+        private readonly ILoggerManager _logger;
+        private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public StewardessesController(AirlineContext context)
+        public StewardessesController(IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
         {
-            _context = context;
+            _repositoryWrapper = repositoryWrapper;
+            _logger = logger;
         }
 
         // GET: Stewardesses
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string sort)
         {
-            var airlineContext = _context.Stewardesses.Include(s => s.Team_Person);
-            return View(await airlineContext.ToListAsync());
+            var airlineContext = _repositoryWrapper.StewardessesRepository.GetAllStewardess();
+            sort ??= "Name"; 
+            _logger.LogInfo($"Returned all owners from database.");
+            return View(airlineContext.OrderByViaExpressions(sort));
         }
 
         // GET: Stewardesses/Details/5
@@ -31,41 +32,38 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
-            var stewardess = await _context.Stewardesses
-                .Include(s => s.Team_Person)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (stewardess == null)
-            {
-                return NotFound();
-            }
+            var stewardess = await _repositoryWrapper.StewardessesRepository.GetStewardessByIdWithTeamAsync(id);
+            _logger.LogInfo($"Returned owner with id: {id}");
+            if (stewardess != null) return View(stewardess);
+            _logger.LogError($"Pilot not found");
+            return NotFound();
 
-            return View(stewardess);
         }
 
         // GET: Stewardesses/Create
         public IActionResult Create()
         {
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team");
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName();
             return View();
         }
 
         // POST: Stewardesses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Stewardess stewardess)
+        public async Task<IActionResult> Create([Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id,ProfilePicture,ProfileImage")] Stewardess stewardess)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(stewardess);
-                await _context.SaveChangesAsync();
+                _logger.LogInfo($"Pilot has been created into database.");
+                await _repositoryWrapper.StewardessesRepository.CreateWithImage(stewardess);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", stewardess.Team_PersonId);
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(stewardess.Team_PersonId);
             return View(stewardess);
         }
 
@@ -74,52 +72,43 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id == null)
             {
+                _logger.LogError("Pilot object sent from client is null.");
                 return NotFound();
             }
 
-            var stewardess = await _context.Stewardesses.FindAsync(id);
+            var stewardess = await _repositoryWrapper.StewardessesRepository.GetById(id);
             if (stewardess == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", stewardess.Team_PersonId);
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(id);
             return View(stewardess);
         }
 
         // POST: Stewardesses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,Id")] Stewardess stewardess)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Surname,Age,Experience,Salary,Team_PersonId,ProfilePicture,ProfileImage,Id")] Stewardess stewardess)
         {
             if (id != stewardess.Id)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(stewardess);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StewardessExists(stewardess.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _logger.LogError("Invalid owner object sent from client.");
+                return View(stewardess);
+            }
+            else
+            {
+                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(stewardess.Team_PersonId);
+                await _repositoryWrapper.StewardessesRepository.GetByIdWithImage(id, stewardess);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team_PersonId"] = new SelectList(_context.Team_Persons, "Id", "Name_Team", stewardess.Team_PersonId);
-            return View(stewardess);
         }
 
         // GET: Stewardesses/Delete/5
@@ -127,17 +116,17 @@ namespace Airline_Yurchenko.Controllers.Personal
         {
             if (id == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
 
-            var stewardess = await _context.Stewardesses
-                .Include(s => s.Team_Person)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var stewardess = await _repositoryWrapper.StewardessesRepository.GetStewardessByIdWithTeamAsync(id);
             if (stewardess == null)
             {
+                _logger.LogError($"Pilot with id: {id}, hasn't been found in db.");
                 return NotFound();
             }
-
+            _logger.LogWarn($"Pilot with id: {id}, has been choose for delete.");
             return View(stewardess);
         }
 
@@ -146,15 +135,10 @@ namespace Airline_Yurchenko.Controllers.Personal
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var stewardess = await _context.Stewardesses.FindAsync(id);
-            _context.Stewardesses.Remove(stewardess);
-            await _context.SaveChangesAsync();
+            _logger.LogInfo($"Pilot has been deleted from database.");
+            await _repositoryWrapper.StewardessesRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StewardessExists(int id)
-        {
-            return _context.Stewardesses.Any(e => e.Id == id);
-        }
     }
 }

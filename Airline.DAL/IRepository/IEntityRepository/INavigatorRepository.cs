@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Airline.DAL.Models;
@@ -9,6 +10,8 @@ namespace Airline.DAL.IRepository.IEntityRepository
     {
         Task<Navigator> MyDiscUnique(Expression<Func<Navigator, bool>> predicate);
         Task<Navigator> GetNavigationByIdWithTeamAsync(int? id);
+        IQueryable<Navigator> GetAllNavigator();
+
 
     }
 }
