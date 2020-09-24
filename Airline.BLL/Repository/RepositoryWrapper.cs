@@ -20,6 +20,7 @@ namespace Airline.BLL.Repository
         private IFligthRepository _fligthRepository;
         private IRequsetRepository _requsetRepository;
         private IStewardessesRepository _stewardessesRepository;
+        private ICitiesRepository _citiesRepository;
         
 
         public RepositoryWrapper(DbContext repoContext, UserManager<IdentityUser> userManager)
@@ -61,6 +62,8 @@ namespace Airline.BLL.Repository
         public IRequsetRepository RequsetRepository => _requsetRepository ??= new RequsetRepository(_context);
 
         public IStewardessesRepository StewardessesRepository => _stewardessesRepository ??= new StewardessesRepository(_context);
+
+        public ICitiesRepository CitiesRepository => _citiesRepository ??= new CitiesRepository(_context);
 
         public void Save()
         {

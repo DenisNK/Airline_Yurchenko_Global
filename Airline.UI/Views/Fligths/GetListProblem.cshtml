@@ -4,8 +4,8 @@
     ViewData["Title"] = "GetListProblem";
 }
 
-<h1 class="text-center">GetListProblem</h1>
-<table class="table table-bordered">
+<h1 class="text-center">Problem List</h1>
+<table class="table table-bordered ">
     <thead>
         <tr>
 
@@ -28,7 +28,14 @@
                 @Html.DisplayFor(modelItem => item.SignIn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Message)
+                @if (item.Message == null || item.Message.Count() == 0)
+                {
+                <p class="font-italic">No message</p>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Message)    
+                }
             </td>
             <td>
                 <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.RequestRef">View</a> 

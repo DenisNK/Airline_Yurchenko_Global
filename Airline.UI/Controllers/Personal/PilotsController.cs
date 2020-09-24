@@ -157,12 +157,10 @@ namespace Airline_Yurchenko.Controllers.Personal
                 _logger.LogError("Invalid owner object sent from client.");
                 return View(pilot);
             }
-            else
-            {
-                ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
-                await _repositoryWrapper.PilotRepository.GetByIdWithImage(id, pilot);
-                return RedirectToAction(nameof(Index));
-            }
+
+            ViewData["Team_PersonId"] = _repositoryWrapper.TeamPersonRepository.SelectListTeamName(pilot.Team_PersonId);
+            await _repositoryWrapper.PilotRepository.GetByIdWithImage(id, pilot);
+            return RedirectToAction(nameof(Index));
 
         }
 

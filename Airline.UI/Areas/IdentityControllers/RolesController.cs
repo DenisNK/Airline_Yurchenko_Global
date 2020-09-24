@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Airline_Yurchenko.Areas.AccountFilters;
 using Airline_Yurchenko.Areas.IdentityViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airline_Yurchenko.Areas.IdentityControllers
 {
+    [ForAdmin]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
