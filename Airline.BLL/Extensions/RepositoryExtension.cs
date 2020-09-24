@@ -21,6 +21,7 @@ namespace Airline.BLL.Extensions
             services.AddScoped<IFligthRepository, FligthRepository>();
             services.AddScoped<IRequsetRepository, RequsetRepository>();
             services.AddScoped<IStewardessesRepository, StewardessesRepository>();
+            services.AddScoped<ICitiesRepository, CitiesRepository>();
             services.AddSingleton<ILoggerManager, LoggerManager>();
             return services;
         }

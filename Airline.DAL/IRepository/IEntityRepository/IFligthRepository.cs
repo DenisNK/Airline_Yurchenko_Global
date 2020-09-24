@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Airline.DAL.Models;
 
 namespace Airline.DAL.IRepository.IEntityRepository
@@ -11,6 +9,7 @@ namespace Airline.DAL.IRepository.IEntityRepository
         IQueryable<Fligth> GetFligthAdminDisp(string name);
         IQueryable<Fligth> GetFligthAllUsers();
         IQueryable<Fligth> GetFligthAdmin();
-
+        Task<Fligth> GetFligthByIdAsync(int? id);
+        
     }
 }

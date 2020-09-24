@@ -13,17 +13,18 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-light btn btn-outline-info border-dark" asp-area="" asp-controller="Home" asp-action="Index">Welcome to Airline</a>
+
+                <a class="rounded rounded-pill navbar-light btn btn-outline-primary border-dark" asp-area="" asp-controller="Home" asp-action="Index">Welcome to Airline</a>
                 <img src="~/Content/Images/Airline.png" width="130" height="80" alt=""/>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
-                    
+
                     <ul class="navbar-nav flex-grow-1">
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
                         {
@@ -33,9 +34,10 @@
                             <li class="nav-item btn btn-outline-info m-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Students" asp-action="Index">Student</a>
                             </li>
-                            <li class="nav-item btn btn-outline-info m-3">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Disciplines" asp-action="Index">Disciplines</a>
-                            </li>
+
+                            @*<li class="nav-item btn btn-outline-info m-3">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Disciplines" asp-action="Index">Disciplines</a>
+                                </li>*@
 
 
                             <li class="nav-item btn btn-outline-info m-3">
@@ -46,7 +48,6 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                             </li>
 
-                            
                             <li class="nav-item btn btn-outline-info m-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Team_Person" asp-action="Index">Team_Person</a>
                             </li>
@@ -57,33 +58,19 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="GetProblem">Request</a>
                             </li>
 
-                        } 
+                        }
                         else
-                        if (SignInManager.IsSignedIn(User) && User.IsInRole("student"))
                         {
                             <li class="nav-item btn btn-outline-info m-3">
-                                <a class="nav-link text-light" asp-area="" asp-controller="SelectStudentDisciplines" asp-action="Index">Select Dicsiplines</a>
-                            </li>
-                            <li class="nav-item btn btn-outline-info m-3">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
                             </li>
-
-                            <li class="nav-item btn btn-outline-info m-3">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Create">createFligth</a>
-                            </li>
                         }
-                        else{
-                            <li class="nav-item btn btn-outline-info m-3">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Fligths" asp-action="Index">Fligths</a>
-                             </li>
 
-                        }
-                        
                     </ul>
-                    
+
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <partial name="_LoginPartial" />
+                    <partial name="_LoginPartial"/>
                 </ul>
             </div>
         </nav>

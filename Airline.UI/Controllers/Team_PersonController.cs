@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.IRepository;
-using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 
 namespace Airline_Yurchenko.Controllers
@@ -49,8 +42,7 @@ namespace Airline_Yurchenko.Controllers
             _logger.LogError($"Team persons not found");
             return NotFound();
         }
-
-
+                                                             
         // GET: Team_Person/Details/5
         public async Task<IActionResult> Details(int? id)
         {

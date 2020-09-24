@@ -11,7 +11,10 @@ namespace Airline.DAL.Initializator
             const string adminPassword = "Admin@gmail.com1"; 
             
             const string dispatcherEmail = "Dispatcher@gmail.com";
-            const string dispatcherPassword = "Dispatcher@gmail.com1";
+            const string dispatcherPassword = "Dispatcher@gmail.com1"; 
+
+            const string dispatcher2Email = "Dispatcher2@gmail.com";
+            const string dispatcher2Password = "Dispatcher2@gmail.com1";
 
             if (await roleManager.FindByNameAsync(ADMIN) == null)
             {
@@ -43,6 +46,16 @@ namespace Airline.DAL.Initializator
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(dispatcher, DISPATCHER);
+                }
+            }
+
+            if (await userManager.FindByNameAsync(dispatcher2Email) == null) // Create new dispatcher if not exist
+            {
+                var dispatcher2 = new IdentityUser { Email = dispatcher2Email, UserName = dispatcher2Email };
+                IdentityResult result = await userManager.CreateAsync(dispatcher2, dispatcher2Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(dispatcher2, DISPATCHER);
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Airline.DAL.IRepository.IEntityRepository;
 using Airline.DAL.Models;
 using Microsoft.AspNetCore.Identity;
@@ -35,5 +36,19 @@ namespace Airline.BLL.Repository.EntityRepository
                 .Include(r => r.FromCity.Country).Include(t => t.WhereCity.Country).Where(confirm=>confirm.IsConfirmed).AsNoTracking();
         }
 
+        public async Task<Fligth> GetFligthByIdAsync(int? id)
+        {
+            return await Task.Run(() => GetFligthById(id));
+
+        }
+        private Fligth GetFligthById(int? id)
+        {
+            return _dbSet
+                .Include(f => f.FromCity)
+                .Include(f => f.WhereCity)
+                .Include(req => req.Request)
+                .AsNoTracking()
+                .FirstOrDefault(o=>o.Id == id);
+        }
     }
 }
