@@ -3,34 +3,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Список пользователей</h1>
+<h1 class="text-center">Navigators</h1>
 <form method="post">
-<table class="table">
-    <tr>
-        <th name ="sort">
-            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Name)">
-                @Html.DisplayNameFor(e=>e.Name)
-            </a>
-        </th>
-        <th name="sort">
-            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Age)">
-                @Html.DisplayNameFor(e => e.Age)
-            </a>
-        </th>
-        <th name="sort">
-            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Team_PersonId)">
-                @Html.DisplayNameFor(e => e.Team_Person)
-            </a>
-        </th>
-    </tr>
-    @foreach (var u in Model)
-    {
+    <table class="table">
         <tr>
-            <td>@Html.DisplayFor(item => @u.Name)</td>
-            <td>@Html.DisplayFor(item => @u.Age)</td>
-            <td>@Html.DisplayFor(item => @u.Team_Person.Name_Team)</td>
+            <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Name)">
+                    @Html.DisplayNameFor(e => e.Name)
+                </a>
+            </th>
+            <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Age)">
+                    @Html.DisplayNameFor(e => e.Age)
+                </a>
+            </th>
+            <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Team_PersonId)">
+                    @Html.DisplayNameFor(e => e.Team_Person)
+                </a>
+            </th>
+            <th>
+                <a>Operations</a>
+            </th>
         </tr>
-    }
-</table>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(item => @u.Name)</td>
+                <td>@Html.DisplayFor(item => @u.Age)</td>
+                <td>@Html.DisplayFor(item => @u.Team_Person.Name_Team)</td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@u.Id">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+                </td>
+            </tr>
+           
+        }
+    </table>
 </form>
 

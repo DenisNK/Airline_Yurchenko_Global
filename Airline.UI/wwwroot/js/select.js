@@ -7,7 +7,7 @@ selectDiscElement.forEach(s => {
 });
 
 async function selectPostAjax(value) {
-    const url = '/SelectStudentDisciplines/Select';
+    const url = '/UserProfile/Index';
     let xsrf_token = document.getElementsByName('__RequestVerificationToken')[0].value;
     try {
         const response = await fetch(url, {

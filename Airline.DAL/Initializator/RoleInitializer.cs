@@ -20,9 +20,9 @@ namespace Airline.DAL.Initializator
             {
                 await roleManager.CreateAsync(new IdentityRole(ADMIN));
             }
-            if (await roleManager.FindByNameAsync(STUDENT) == null)
+            if (await roleManager.FindByNameAsync(USER) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole(STUDENT));
+                await roleManager.CreateAsync(new IdentityRole(USER));
             }
             if (await roleManager.FindByNameAsync(DISPATCHER) == null)
             {

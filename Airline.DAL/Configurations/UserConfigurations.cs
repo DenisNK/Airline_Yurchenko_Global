@@ -1,18 +1,18 @@
 ﻿using Airline.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Airline.DAL.Initializator.Constants;
+
 namespace Airline.DAL.Configurations
 {
-    public class StudentConfigurations : IEntityTypeConfiguration<Student>
+    public class UserConfigurations : IEntityTypeConfiguration<UserProfile>
     {
-        public void Configure(EntityTypeBuilder<Student> builder)
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            builder.ToTable(TABLE_STUDENTS);
+          //  builder.ToTable(USER);
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(30);
-            builder.Property(p => p.Group)
+            builder.Property(p => p.Gender)
                 .IsRequired()
                 .HasMaxLength(10);
         }

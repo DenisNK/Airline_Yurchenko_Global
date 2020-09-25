@@ -1,21 +1,9 @@
-﻿
-@{
-    ViewBag.Title = "FlightTeamResult";
-}
-
-@{
+﻿@{
     ViewBag.Title = "Flitht_Teams";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<head runat="server">
-    <link rel="stylesheet" type="text/css" href="~/Content/Site.css?Version=1" />
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 
-</head>
-<a asp-action="Index" >Team List</a> 
-<br />
-<h1 class="text-center" ; style="font-family:'Comic Sans MS'">Flight Teams</h1>
-<br />
+<h1 class="text-center">Flight Teams</h1>
 <br />
     <div class="float-left" style="max-width: 540px;">
         <div class="row no-gutters">
@@ -24,7 +12,7 @@
                     <div class="Button_Create">
                         <a href="@Url.Action("Index","Radio_operator")"> <img src="@Url.Content("~/Content/Airline_Person/Steward.png")" alt="Home" width="150" height="150" card-img /></a>
                     </div>
-                    @*    <img src="~/Content/pilot.png" width="150" height="150" card-img" />*@
+                
                 </div>
             </div>
             <div class="col-lg-8 ">
@@ -43,7 +31,7 @@
                 <div class="Button_Create">
                     <a href="@Url.Action("Index","Stewardesses")"> <img src="@Url.Content("~/Content/Airline_Person/stewardess.png")" alt="Home" width="150" height="150" card-img /></a>
                 </div>
-                @*    <img src="~/Content/Steward.png" width="150" height="150" card-img" />*@
+                
             </div>
             <div class="col-lg-8">
                 <div class="card-body">
@@ -102,5 +90,4 @@
 <br />
 <br />
 <br />
-<br />
-<br />
+

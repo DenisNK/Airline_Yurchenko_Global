@@ -45,7 +45,7 @@ namespace Airline_Yurchenko.Areas.IdentityControllers
                     else
                     {
                       //  await Authenticate(model.Name); // аутентификация
-                        return RedirectToAction("Index", "SelectStudentDisciplines");
+                        return RedirectToAction("Index", "Fligths");
                     }
                 }
                 else

@@ -5,10 +5,7 @@ namespace Airline.DAL.IRepository
     public interface IRepositoryWrapper
 
     {
-        IDisciplinesRepository DisciplinesRepo { get; }
-        IStudentRepository StudentRepo { get; }
-        IStudDiscRepository StudDiscRepo { get; }
-        ITeacherRepository TeacherRepository { get; }
+        IUserRepository UserRepo { get; }
         IPilotRepository PilotRepository{ get; }
         INavigatorRepository NavigatorRepository{ get; }
         ITeamPersonRepository TeamPersonRepository { get; }

@@ -1,5 +1,5 @@
 ﻿@using Airline.BLL.Services
-@model Airline_Yurchenko.Areas.IdentityViewModels.RegisterStudentViewModel
+@model Airline_Yurchenko.Areas.IdentityViewModels.RegisterUserViewModel
 @inject IGroupService groupService
 
 @{
@@ -8,7 +8,7 @@
 }
 <h1>Create</h1>
 
-<h4>Student</h4>
+<h4>UserProfile</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,9 +20,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Group" class="control-label"></label>
-                <select asp-for="Group" class="form-control" asp-items="new SelectList(groupService.GetGroups())"></select>
-                <span asp-validation-for="Group" class="text-danger"></span>
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" class="form-control" asp-items="new SelectList(groupService.GetGroups())"></select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>

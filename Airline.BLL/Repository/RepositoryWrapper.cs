@@ -10,10 +10,7 @@ namespace Airline.BLL.Repository
     {
         private readonly DbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private IStudentRepository _studentRepository;
-        private IDisciplinesRepository _disciplinesRepository;
-        private IStudDiscRepository _studDiscRepository;
-        private ITeacherRepository _teacherRepository;
+        private IUserRepository _userRepository;
         private IPilotRepository _pilotRepository;
         private INavigatorRepository _navigatorRepository;
         private ITeamPersonRepository _teamPersonRepository;
@@ -29,29 +26,22 @@ namespace Airline.BLL.Repository
             _userManager = userManager;
         }
 
-        public IStudentRepository StudentRepo
+        public IUserRepository UserRepo
         {
             get
             {
-                if (_studentRepository == null)
+                if (_userRepository == null)
                 {
-                    _studentRepository = new StudentRepository(_context);
+                    _userRepository = new UserRepository(_context);
                 }
 
-                return _studentRepository;
+                return _userRepository;
             }
         }
         public IPilotRepository PilotRepository
         {
             get { return _pilotRepository ??= new PilotRepository(_context); }
         }
-
-
-        public IStudDiscRepository StudDiscRepo => _studDiscRepository ??= new StudDiscRepository(_context);
-
-        public IDisciplinesRepository DisciplinesRepo => _disciplinesRepository ??= new DisciplinesRepository(_context);
-
-        public ITeacherRepository TeacherRepository => _teacherRepository ??= new TeacherRepository(_context);
 
         public INavigatorRepository NavigatorRepository => _navigatorRepository ??= new NavigatorRepository(_context);
 
