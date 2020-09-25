@@ -11,10 +11,8 @@ namespace Airline.BLL.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(Repository<>));
-            services.AddScoped<IDisciplinesRepository, DisciplinesRepository>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<IPilotRepository, PilotRepository>();
             services.AddScoped<INavigatorRepository, NavigatorRepository>();
             services.AddScoped<ITeamPersonRepository, TeamPersonRepository>();

@@ -3,7 +3,7 @@ using Airline_Yurchenko.ValidationAttribute;
 
 namespace Airline_Yurchenko.Areas.IdentityViewModels
 {
-    public class RegisterStudentViewModel
+    public class RegisterUserViewModel
     {
         //[Forbidden("xxx", "yyy")]
         [Required(ErrorMessage = "Please, input your name")]
@@ -15,7 +15,7 @@ namespace Airline_Yurchenko.Areas.IdentityViewModels
         public string Email { get; set; }
 
         [Required]
-        public string  Group { get; set; }
+        public string  Gender { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

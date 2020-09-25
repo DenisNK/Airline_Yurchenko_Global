@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
 <h1 class="text-center">UserList</h1>
+<a class="btn btn-sm btn-primary mb-2 " asp-action="Create" asp-controller="UserProfile">Create User</a>
 <table class="table table-bordered shadow">
     @foreach (var user in Model)
     {

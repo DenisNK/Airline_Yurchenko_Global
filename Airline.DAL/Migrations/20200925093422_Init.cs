@@ -60,33 +60,6 @@ namespace Airline.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Group = table.Column<string>(maxLength: 10, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Teachers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Team_Person",
                 columns: table => new
                 {
@@ -97,6 +70,20 @@ namespace Airline.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Team_Person", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserProfile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Gender = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfile", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,27 +209,6 @@ namespace Airline.DAL.Migrations
                         name: "FK_City_Country_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Country",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Disciplines",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(maxLength: 30, nullable: false),
-                    Annotation = table.Column<string>(maxLength: 30, nullable: false),
-                    TeacherId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Disciplines", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Disciplines_Teachers_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -391,31 +357,6 @@ namespace Airline.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudDiscs",
-                columns: table => new
-                {
-                    StudentId = table.Column<int>(nullable: false),
-                    DisciplineId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudDiscs", x => new { x.DisciplineId, x.StudentId });
-                    table.ForeignKey(
-                        name: "FK_StudDiscs_Disciplines_DisciplineId",
-                        column: x => x.DisciplineId,
-                        principalTable: "Disciplines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StudDiscs_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FligthTeam",
                 columns: table => new
                 {
@@ -505,11 +446,6 @@ namespace Airline.DAL.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Disciplines_TeacherId",
-                table: "Disciplines",
-                column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Fligths_FromCityId",
                 table: "Fligths",
                 column: "FromCityId");
@@ -559,11 +495,6 @@ namespace Airline.DAL.Migrations
                 name: "IX_Stewardess_Team_PersonId",
                 table: "Stewardess",
                 column: "Team_PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudDiscs_StudentId",
-                table: "StudDiscs",
-                column: "StudentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -602,7 +533,7 @@ namespace Airline.DAL.Migrations
                 name: "Stewardess");
 
             migrationBuilder.DropTable(
-                name: "StudDiscs");
+                name: "UserProfile");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -617,16 +548,7 @@ namespace Airline.DAL.Migrations
                 name: "Team_Person");
 
             migrationBuilder.DropTable(
-                name: "Disciplines");
-
-            migrationBuilder.DropTable(
-                name: "Students");
-
-            migrationBuilder.DropTable(
                 name: "City");
-
-            migrationBuilder.DropTable(
-                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "Country");

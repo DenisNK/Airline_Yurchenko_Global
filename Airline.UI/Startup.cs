@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Airline.BLL.Extensions;
 using Airline.DAL.Airline_Db_Context;
+using Airline.DAL.Initializator;
 using Airline_Yurchenko.FiltersApp;
 using Airline_Yurchenko.LoggerManager;
 using Airline_Yurchenko.Middleware;
@@ -54,7 +55,7 @@ namespace Airline_Yurchenko
             {
                 options.AddPolicy(ADMIN,
                     t => t.RequireAssertion(
-                        context => !context.User.Claims.Any(c => c.Type == STUDENTID)
+                        context => !context.User.Claims.Any(c => c.Type == Constants.USERID)
                     ));
             });
 

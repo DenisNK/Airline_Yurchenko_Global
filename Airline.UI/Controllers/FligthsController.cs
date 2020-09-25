@@ -14,12 +14,10 @@ namespace Airline_Yurchenko.Controllers
     public class FligthsController : Controller
     {
         private readonly ILoggerManager _logger;
-        private readonly AirlineContext _context;
         private readonly IRepositoryWrapper _repositoryWrapper;
         
-        public FligthsController(AirlineContext context, IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
+        public FligthsController(IRepositoryWrapper repositoryWrapper, ILoggerManager logger)
         {
-            _context = context;
             _repositoryWrapper = repositoryWrapper;
             _logger = logger;
         }
@@ -27,7 +25,7 @@ namespace Airline_Yurchenko.Controllers
         public IActionResult GetProblem()
         {
             var source = _repositoryWrapper.RequsetRepository.Get().ToList();
-            var airlineContext = _context.Requests
+            var airlineContext = _repositoryWrapper.RequsetRepository.Get()
                 .GroupBy(u => u.SignIn, (key, items) => new RequestViewModel
                 {
                     Sig = key,

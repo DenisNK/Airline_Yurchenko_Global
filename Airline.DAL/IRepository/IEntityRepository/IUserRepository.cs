@@ -5,8 +5,8 @@ using Airline.DAL.Models;
 
 namespace Airline.DAL.IRepository.IEntityRepository
 {
-    public interface IStudentRepository : IGenericRepository<Student>
+    public interface IUserRepository : IGenericRepository<UserProfile>
     {
-        Task<Student> MyStudUnique(Expression<Func<Student, bool>> predicate);
+        Task<UserProfile> MyStudUnique(Expression<Func<UserProfile, bool>> predicate);
     }
 }

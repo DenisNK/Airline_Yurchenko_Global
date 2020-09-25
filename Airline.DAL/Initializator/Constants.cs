@@ -7,8 +7,8 @@
         public const string ADMIN = "admin"; // role "admin"
         public const string ADMINID = "adminId"; // role "admin"
 
-        public const string STUDENT = "student"; // role "student"
-        public const string STUDENTID = "studentId"; // student
+        public const string USER = "user"; // role "user"
+        public const string USERID = "userId"; // user
 
         public const string DISPATCHER = "dispatcher"; // 
 
@@ -23,12 +23,6 @@
         public const string STEWARDESS = "Stewardess"; // 
         public const string TEAM_PERSON = "Team_Person"; // 
         public const string FLIGTH_TEAM = "FligthTeam"; // 
-
-
-        public const string TABLE_DISCIPLINES = "Disciplines"; // 
-        public const string TABLE_STUDDISCS = "StudDiscs"; // 
-        public const string TABLE_STUDENTS = "Students"; // 
-        public const string TABLE_TEACHERS = "Teachers"; // 
 
         /// Path
         public const string SECRET_FILE = "wwwroot/SecretsFiles";

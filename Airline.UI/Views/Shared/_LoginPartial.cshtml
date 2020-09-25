@@ -21,6 +21,6 @@ else
     <a class="btn btn-info" asp-controller="Account" asp-action="Login">Login</a>
     @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
     {
-        <a class="btn btn-info" asp-controller="Students" asp-action="Create">Register</a>
+        <a class="btn btn-info" asp-controller="UserProfile" asp-action="Create">Register</a>
     }
 }

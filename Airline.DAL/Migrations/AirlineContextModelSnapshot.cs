@@ -63,33 +63,6 @@ namespace Airline.DAL.Migrations
                     b.ToTable("Country");
                 });
 
-            modelBuilder.Entity("Airline.DAL.Models.Discipline", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Annotation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Disciplines");
-                });
-
             modelBuilder.Entity("Airline.DAL.Models.Fligth", b =>
                 {
                     b.Property<int>("Id")
@@ -329,63 +302,6 @@ namespace Airline.DAL.Migrations
                     b.ToTable("Stewardess");
                 });
 
-            modelBuilder.Entity("Airline.DAL.Models.StudDisc", b =>
-                {
-                    b.Property<int>("DisciplineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("DisciplineId", "StudentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudDiscs");
-                });
-
-            modelBuilder.Entity("Airline.DAL.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Group")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("Airline.DAL.Models.Teacher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Teachers");
-                });
-
             modelBuilder.Entity("Airline.DAL.Models.Team_Person", b =>
                 {
                     b.Property<int>("Id")
@@ -401,6 +317,28 @@ namespace Airline.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Team_Person");
+                });
+
+            modelBuilder.Entity("Airline.DAL.Models.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserProfile");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -606,13 +544,6 @@ namespace Airline.DAL.Migrations
                         .HasForeignKey("CountryId");
                 });
 
-            modelBuilder.Entity("Airline.DAL.Models.Discipline", b =>
-                {
-                    b.HasOne("Airline.DAL.Models.Teacher", "Teacher")
-                        .WithMany("Discipline")
-                        .HasForeignKey("TeacherId");
-                });
-
             modelBuilder.Entity("Airline.DAL.Models.Fligth", b =>
                 {
                     b.HasOne("Airline.DAL.Models.City", "FromCity")
@@ -682,21 +613,6 @@ namespace Airline.DAL.Migrations
                     b.HasOne("Airline.DAL.Models.Team_Person", "Team_Person")
                         .WithMany("Stewardesses")
                         .HasForeignKey("Team_PersonId");
-                });
-
-            modelBuilder.Entity("Airline.DAL.Models.StudDisc", b =>
-                {
-                    b.HasOne("Airline.DAL.Models.Discipline", "Discipline")
-                        .WithMany("StudDiscs")
-                        .HasForeignKey("DisciplineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Airline.DAL.Models.Student", "Student")
-                        .WithMany("StudDiscs")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -6,12 +6,12 @@ namespace Airline.BLL.Services
 {
     public class GroupService : IGroupService
     {
-        private readonly string GroupFile = "groups.json";
+        private readonly string GroupFile = "genders.json";
         public IEnumerable<string> GetGroups()
         {
             var jsonString = ReadAllText(GroupFile);
             var resultDeserialize = Deserialize<IDictionary<string, IEnumerable<string>>>(jsonString);
-            return resultDeserialize["name_groups"];
+            return resultDeserialize["name_gender"];
         }
     }
 }

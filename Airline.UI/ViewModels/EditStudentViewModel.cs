@@ -15,8 +15,8 @@ namespace Airline_Yurchenko.ViewModels
         [Required(ErrorMessage = "Please, input your Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Please, input your Group")]
-        public string Group{ get; set; }
+        [Required(ErrorMessage = "Please, input your Gender")]
+        public string Gender{ get; set; }
 
     }
 }
