@@ -4,6 +4,9 @@
 }
 
 <h1 class="text-center">Navigators</h1>
+<p>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
+</p>
 <form method="post">
     <table class="table">
         <tr>
@@ -13,8 +16,23 @@
                 </a>
             </th>
             <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Surname)">
+                    @Html.DisplayNameFor(e => e.Surname)
+                </a>
+            </th>
+            <th name="sort">
                 <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Age)">
                     @Html.DisplayNameFor(e => e.Age)
+                </a>
+            </th>
+            <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Experience)">
+                    @Html.DisplayNameFor(e => e.Experience)
+                </a>
+            </th>
+            <th name="sort">
+                <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Salary)">
+                    @Html.DisplayNameFor(e => e.Salary)
                 </a>
             </th>
             <th name="sort">
@@ -30,7 +48,10 @@
         {
             <tr>
                 <td>@Html.DisplayFor(item => @u.Name)</td>
+                <td>@Html.DisplayFor(item => @u.Surname)</td>
                 <td>@Html.DisplayFor(item => @u.Age)</td>
+                <td>@Html.DisplayFor(item => @u.Experience)</td>
+                <td>@Html.DisplayFor(item => @u.Salary)</td>
                 <td>@Html.DisplayFor(item => @u.Team_Person.Name_Team)</td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@u.Id">Edit</a> |

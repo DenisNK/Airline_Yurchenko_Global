@@ -4,6 +4,9 @@
     ViewData["Title"] = "Home Page";
 }
 <h1 class="text-center">Pilots</h1>
+<p>
+    <a class="btn btn-info" asp-action="Create" asp-controller="Pilots">Create New</a>
+</p>
 <form method="get">
     <div class="form-group form-inline">
         <label>Name: </label>
@@ -20,20 +23,42 @@
     <tr>
         <th>
             <a asp-action="Index"
-               asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
+               asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Name)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
-            @Html.DisplayNameFor(it=>it.Users.GetEnumerator().Current.Name)</a>
+                @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Name)
+            </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AgeSort)"
+            <a asp-action="Index" asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Surname)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
+                @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Surname)
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Age)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
                 @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Age)
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CompanySort)"
+            <a asp-action="Index" asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Experience)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
+                @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Experience)
+            </a>
+        </th><th>
+            <a asp-action="Index" asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Salary)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">
+                @Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Salary)
+            </a>
+        </th>
+
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@Html.DisplayNameFor(e=>e.Users.GetEnumerator().Current.Team_Person)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-company="@(Model.FilterViewModel.SelectedCompany)">@Html.DisplayNameFor(it => it.Users.GetEnumerator().Current.Team_Person)</a>
         </th>
@@ -48,7 +73,10 @@
     {
 <tr>
     <td>@u.Name</td>
+    <td>@u.Surname</td>
     <td>@u.Age</td>
+    <td>@u.Experience</td>
+    <td>@u.Salary</td>
     <td>@u.Team_Person.Name_Team</td>    @*??????*@
     
     <td>
@@ -65,7 +93,6 @@
 
 <page-link page-model="Model.PageViewModel" page-action="Index"
            page-url-name="@(Model.FilterViewModel.SelectedName)"
-           page-url-company="@(Model.FilterViewModel.SelectedCompany)"
-           page-url-sortorder="@(Model.SortViewModel.Current)">
+           page-url-company="@(Model.FilterViewModel.SelectedCompany)">
 
 </page-link>

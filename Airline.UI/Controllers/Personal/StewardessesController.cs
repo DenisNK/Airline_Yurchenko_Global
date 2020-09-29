@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Airline.DAL.IRepository;
 using Airline.DAL.Models;
+using Airline_Yurchenko.Areas.AccountFilters;
 using Airline_Yurchenko.SortExtentions;
 using Airline_Yurchenko.ViewModels;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
+    [ForAdmin]
     public class StewardessesController : Controller
     {
         private readonly ILoggerManager _logger;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.IRepository;
 using Airline.DAL.Models;
 using Airline_Yurchenko.Areas.AccountFilters;
+using Airline_Yurchenko.SortExtentions;
 using Airline_Yurchenko.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
@@ -50,17 +52,18 @@ namespace Airline_Yurchenko.Controllers
         // GET: Fligths
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sort)
         {
-            if (IsUser())
-                return View(await _repositoryWrapper.FligthRepository.GetFligthAllUsers().ToListAsync());
-            return User.IsInRole("admin")
-                ? View(await _repositoryWrapper.FligthRepository.GetFligthAdmin()
-                    .ToListAsync())
+            sort ??= "Name_Fligth";
+            if (IsUser())       //get all flight for all users
+                return View(await _repositoryWrapper.FligthRepository.GetFligthAllUsers().SortDynamic(sort).ToDynamicListAsync<Fligth>());
+            return User.IsInRole("admin")                     //get flight for users with role
+                ? View(await _repositoryWrapper.FligthRepository.GetFligthAdmin().SortDynamic(sort)
+                    .ToDynamicListAsync<Fligth>())      
                 : View(await _repositoryWrapper.FligthRepository.GetFligthAdminDisp(User.Identity.Name)
-                    .ToListAsync());
+                    .SortDynamic(sort).ToDynamicListAsync<Fligth>());
         }
-
+        
         // GET: Fligths/Details/5
 
         [AllowAnonymous]

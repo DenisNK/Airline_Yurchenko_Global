@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
+using Airline_Yurchenko.Areas.AccountFilters;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
+    [ForAdmin]
     public class Radio_operatorController : Controller
     {
         private readonly AirlineContext _context;

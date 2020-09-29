@@ -5,7 +5,7 @@ namespace Airline_Yurchenko.Areas.IdentityViewModels
 {
     public class RegisterUserViewModel
     {
-        //[Forbidden("xxx", "yyy")]
+        [Forbidden("Admin", "Dispatcher")]
         [Required(ErrorMessage = "Please, input your name")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Name should not be longer than 20 characters.")]
         public string Name { get; set; }

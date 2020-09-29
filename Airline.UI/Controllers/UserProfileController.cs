@@ -52,7 +52,6 @@ namespace Airline_Yurchenko.Controllers
             var result = await _userManager.CreateAsync(user, userprofile.Password);
             if (result.Succeeded)
             {
-                // установка куки
                 await _signInManager.SignInAsync(user, false);
                 // Add new userprofile
                 await _repository.Create(stud);
@@ -151,7 +150,13 @@ namespace Airline_Yurchenko.Controllers
 
             return View(userprofile);
         }
-
+        // Checked add to table dublicate data
+        public JsonResult ValidateJsonResultTitle(string name)
+        {
+            if (_repository.Get().Any(s => s.Name == name))
+                return Json("title is not unique.");
+            return Json(true);
+        }
 
     }
 }

@@ -32,44 +32,60 @@
     else
     {
         
-    <thead>
-        <tr class="alert-info">
-            <th>
+    <thead class="text-center">
+    <tr class="alert-info">
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Name_Fligth)">
                 @Html.DisplayNameFor(model => model.Name_Fligth)
-            </th>
-            <th>
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.FromCity)">
                 @Html.DisplayNameFor(model => model.FromCity)
-            </th>
-            <th>
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.WhereCity)">
                 @Html.DisplayNameFor(model => model.WhereCity)
-            </th>
-            <th>
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.DepartureDate)">
                 @Html.DisplayNameFor(model => model.DepartureDate)
-            </th>
-            <th>
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.ArrivalDate)">
                 @Html.DisplayNameFor(model => model.ArrivalDate)
-            </th>
-            <th>
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.FromCountry)">
                 @Html.DisplayNameFor(model => model.FromCountry)
-            </th>
-         
-            <th>
-                @Html.DisplayNameFor(model => model.IsConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
+            </a>
+        </th>
 
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.IsConfirmed)">
+                @Html.DisplayNameFor(model => model.IsConfirmed)
+            </a>
+        </th>
+        <th name="sort">
+            <a asp-action="Index" asp-route-sort="@Html.DisplayNameFor(e=>e.Price)">
+                @Html.DisplayNameFor(model => model.Price)
+            </a>
+        </th>
+
+        <th>
+            Information
+        </th>
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+        {
             <th>
-                Information
+                Operations
             </th>
-            @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
-            {
-                <th>
-                    Operations
-                </th>
-            }
-        </tr>
+        }
+    </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -115,11 +131,9 @@
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
                 {
                     <td>
-
                         <a class="btn btn-warning small mb-1 w-100" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
                         <a class="btn btn-danger small mb-1 w-100" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         <a class="btn btn-primary small w-100" asp-controller="SelectFligthTeam" asp-action="ListSelectTeamFligth" asp-route-id="@item.Id">Team</a>
-
                     </td>
                 }
 

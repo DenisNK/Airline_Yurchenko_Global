@@ -7,10 +7,12 @@ using Airline.DAL.Airline_Db_Context;
 using Airline.DAL.Models;
 using Airline_Yurchenko.ViewModels;
 using Airline.DAL.IRepository;
+using Airline_Yurchenko.Areas.AccountFilters;
 using Airline_Yurchenko.SortExtentions;
 
 namespace Airline_Yurchenko.Controllers.Personal
 {
+    [ForAdmin]
     public class NavigatorsController : Controller
     {
         private readonly AirlineContext _context;
@@ -160,6 +162,13 @@ namespace Airline_Yurchenko.Controllers.Personal
             return RedirectToAction(nameof(Index));
         }
 
+        // Checked add to table dublicate data
+        public JsonResult ValidateJsonResultTitle(string surname)
+        {
+            if (_repositoryWrapper.NavigatorRepository.Get().Any(s => s.Surname == surname))
+                return Json("title is not unique.");
+            return Json(true);
+        }
         private bool NavigatorExists(int id)
         {
             return _context.Navigators.Any(e => e.Id == id);
