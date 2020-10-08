@@ -17,3 +17,14 @@
 ### Database schema
 ![alt text](https://github.com/DenisNK/Airline_Yurchrnko_Global/blob/master/images/Diagram.png)
 
+For Admin
+Login : "Admin@gmail.com"
+Password :"Admin@gmail.com1"
+
+For Dispatcher1
+Login : "Dispatcher@gmail.com"
+Password :"Dispatcher@gmail.com1"
+
+For Dispatcher2
+Login : "Dispatcher2@gmail.com"
+Password :"Dispatcher2@gmail.com1"
