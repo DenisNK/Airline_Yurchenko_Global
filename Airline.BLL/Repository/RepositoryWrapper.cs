@@ -9,7 +9,6 @@ namespace Airline.BLL.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly DbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
         private IUserRepository _userRepository;
         private IPilotRepository _pilotRepository;
         private INavigatorRepository _navigatorRepository;
@@ -20,10 +19,9 @@ namespace Airline.BLL.Repository
         private ICitiesRepository _citiesRepository;
         
 
-        public RepositoryWrapper(DbContext repoContext, UserManager<IdentityUser> userManager)
+        public RepositoryWrapper(DbContext repoContext)
         {
             _context = repoContext;
-            _userManager = userManager;
         }
 
         public IUserRepository UserRepo
