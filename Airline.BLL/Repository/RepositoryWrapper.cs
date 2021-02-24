@@ -1,7 +1,6 @@
 ﻿using Airline.BLL.Repository.EntityRepository;
 using Airline.DAL.IRepository;
 using Airline.DAL.IRepository.IEntityRepository;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.BLL.Repository

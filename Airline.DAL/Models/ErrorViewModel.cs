@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Airline.DAL.Models
+﻿namespace Airline.DAL.Models
 {
     public class ErrorViewModel
     {

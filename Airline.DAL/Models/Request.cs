@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Airline.DAL.IRepository;
+﻿using Airline.DAL.IRepository;
 
 namespace Airline.DAL.Models
 {

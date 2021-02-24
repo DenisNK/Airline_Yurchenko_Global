@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -26,8 +25,7 @@ namespace Airline.BLL.Repository.EntityRepository
                 .AsNoTracking()
                 .SingleOrDefault(o => o.Id == id);
         }
-
-    
+                                      
         public Task<Navigator> MyDiscUnique(Expression<Func<Navigator, bool>> predicate)
         {
             return _context.Set<Navigator>().FirstOrDefaultAsync(predicate);
